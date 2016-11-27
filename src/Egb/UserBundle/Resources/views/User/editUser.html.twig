@@ -1,0 +1,13 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title "EGB - Users" %}
+{% trans_default_domain 'UserBundle' %}
+{% block pagetitle "user.edit.headline"|trans({'%username%': user.username}) %}
+
+{% block content_header '' %}
+
+{% block content %}
+	{{ form_start(form, {'method': 'PUT'}) }}
+	{{ form_widget(form) }}
+	{{ form_end(form) }}
+{% endblock %}

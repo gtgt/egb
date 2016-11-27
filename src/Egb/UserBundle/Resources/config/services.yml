@@ -1,0 +1,7 @@
+services:
+# user.example:
+#   class: Egb\UserBundle\Example
+#   arguments: [@service_id, "plain_value", %parameter%]
+  egb.user:
+    class:  Egb\CommonBundle\Services\UserService
+    arguments: [ "@doctrine.orm.entity_manager" ]

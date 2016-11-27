@@ -1,0 +1,12 @@
+.idea
+nbproject
+composer.lock
+/web/bundles/
+/app/cache/*
+/app/logs/*
+/build/
+/vendor/
+/bin/
+/composer.phar
+app/config/parameters.yml
+src/AppBundle

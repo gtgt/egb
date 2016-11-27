@@ -1,0 +1,20 @@
+{% extends "UserBundle::layout.html.twig" %}
+
+{% trans_default_domain "UserBundle" %}
+
+{% block title "EGB - Users" %}
+{% block pagetitle "user.new.headline"|trans %}
+
+{% block content_header "" %}
+
+{% block content %}
+
+	{% if (form is defined) %}
+		{{ form_start(form, {'method': 'PUT'}) }}
+		{{ form_widget(form) }}
+		{{ form_end(form) }}
+	{% endif %}
+
+	<a href="{{ path('api_get_users') }}">{{ 'user.list.link'|trans }}</a>
+
+{% endblock %}

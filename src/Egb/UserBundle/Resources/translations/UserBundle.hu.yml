@@ -1,0 +1,37 @@
+offset: eltolás
+limit: limit
+user:
+  list:
+    link: vissza a felhasználókhoz
+    headline: Felhasználók
+    empty: Nincs felhasználó
+  new:
+    link: új felhasználó
+    headline: Új felhasználó létrehozása
+    submit: hozzáadás
+  edit:
+    link: szerkesztés
+    headline: %username% felhasználó szerkesztése
+    submit: módosítás
+  remove:
+    link: törlés
+form:
+  user:
+    username:
+      label: Fióknév
+    lastname:
+      label: Vezetéknév
+    firstname:
+      label: Keresztnév
+    email:
+      label: E-Mail
+    type:
+      label: Típus
+    plainPassword:
+      first:
+        label: Jelszó
+      second:
+        label: Jelszó mégegyszer
+api:
+  doc:
+    link: API dokumentáció

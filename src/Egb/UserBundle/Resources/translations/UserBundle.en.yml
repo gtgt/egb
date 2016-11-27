@@ -1,0 +1,37 @@
+offset: offset
+limit: limit
+user:
+  list:
+    link: back to user list
+    headline: Available users
+    empty: No users found
+  new:
+    link: create new user
+    headline: Create new user
+    submit: add user
+  edit:
+    link: edit
+    headline: Edit user %username%
+    submit: update user
+  remove:
+    link: remove
+form:
+  user:
+    username:
+      label: Fióknév
+    lastname:
+      label: Last name
+    firstname:
+      label: First name
+    email:
+      label: E-Mail
+    type:
+      label: Type
+    plainPassword:
+      first:
+        label: Password
+      second:
+        label: Password again
+api:
+  doc:
+    link: API documentation

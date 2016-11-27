@@ -1,0 +1,17 @@
+{% extends "UserBundle::layout.html.twig" %}
+
+{% block title "EGB - User" %}
+
+{% block content_header '' %}
+
+{% block content %}
+	{% block pagetitle %}User #{{ user.username }}{% endblock %}
+	{% trans_default_domain 'UserBundle' %}
+
+	<p>{{ user }}</p>
+	<p>
+		<a href="{{ path('api_get_users') }}">{{ 'user.list.link'|trans }}</a> <br>
+		[<a href="{{ path('api_remove_users', {'id': user.id}) }}">{{ 'user.remove.link'|trans }}</a>]
+		[<a href="{{ path('api_edit_users', {'id': user.id}) }}">{{ 'user.edit.link'|trans }}</a>]
+	</p>
+{% endblock %}

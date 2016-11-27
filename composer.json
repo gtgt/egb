@@ -1,0 +1,74 @@
+{
+	"name": "gtgt/egb-demo",
+	"license": "MIT",
+	"type": "project",
+	"description": "Electronic Grade Book (demo project)",
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"autoload": {
+		"psr-4": {
+			"": "src/"
+		}
+	},
+	"require": {
+		"php": ">=5.7.0",
+		"symfony/symfony": "^3.1.0",
+
+		"doctrine/doctrine-bundle": "@dev",
+		"doctrine/orm": "@dev",
+		"elao/form-translation-bundle": "@dev",
+		"friendsofsymfony/http-cache-bundle": "@dev",
+		"friendsofsymfony/rest-bundle": "@dev",
+		"friendsofsymfony/user-bundle": "@dev",
+		"hautelook/templated-uri-bundle": "@dev",
+		"incenteev/composer-parameter-handler": "@dev",
+		"jms/serializer-bundle": "@dev",
+		"leafo/scssphp": "@dev",
+		"nelmio/api-doc-bundle": "@dev",
+		"patchwork/jsqueeze": "@dev",
+		"sensio/distribution-bundle": "@dev",
+		"sensio/framework-extra-bundle": "@dev",
+		"symfony/assetic-bundle": "@dev",
+		"symfony/monolog-bundle": "@dev",
+		"symfony/swiftmailer-bundle": "@dev",
+		"twbs/bootstrap-sass": "@dev",
+		"willdurand/hateoas-bundle": "@dev",
+		"willdurand/rest-extra-bundle": "@dev"
+	},
+	"require-dev": {
+		"sensio/generator-bundle": "@dev"
+	},
+	"scripts": {
+		"post-install-cmd": [
+			"Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+		],
+		"post-update-cmd": [
+			"Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+		]
+	},
+	"config": {
+		"bin-dir": "bin",
+		"prefer-dist": true
+	},
+	"extra": {
+		"symfony-app-dir": "app",
+		"symfony-web-dir": "web",
+		"symfony-assets-install": "relative",
+		"incenteev-parameters": {
+			"file": "app/config/parameters.yml"
+		},
+		"branch-alias": {
+			"dev-master": "3.1-dev"
+		}
+	}
+}

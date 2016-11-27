@@ -1,0 +1,29 @@
+{% extends "UserBundle::layout.html.twig" %}
+
+{% block title "EGB - Users" %}
+{% trans_default_domain 'UserBundle' %}
+{% block pagetitle "user.list.headline"|trans %}
+
+{% block content_header '' %}
+
+{% block content %}
+
+	<p>
+		{{ 'offset'|trans }}: {{ offset ?: '-' }}, {{ 'limit'|trans }}: {{ limit }}
+	</p>
+
+	<ul id="user-list">
+		{% for id, user in users %}
+			<li>
+				<a href="{{ path('api_get_user', {'id': user.id}) }}">{{ user }}</a>
+				[<a href="{{ path('api_edit_user', {'id': user.id}) }}">{{ 'user.edit.link'|trans }}</a>]
+				[<a href="{{ path('api_remove_user', {'id': user.id}) }}">{{ 'user.remove.link'|trans }}</a>]
+			</li>
+		{% else %}
+			<li>{{ 'user.list.empty'|trans }}</li>
+		{% endfor %}
+	</ul>
+	<p>
+		<a href="{{ path('api_new_users') }}">{{ 'user.new.link'|trans }}</a>
+	</p>
+{% endblock %}

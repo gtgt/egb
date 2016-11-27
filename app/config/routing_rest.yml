@@ -1,0 +1,7 @@
+notes:
+  resource: "@AppBundle/Controller/NoteController.php"
+  type:     rest
+
+rest_user:
+  type : rest
+  resource: "@UserBundle/Resources/config/routing_rest.yml"
