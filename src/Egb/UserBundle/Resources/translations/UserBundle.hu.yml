@@ -27,11 +27,18 @@ form:
       label: E-Mail
     type:
       label: Típus
+      placeholder: -- Típus választása --
+      user: Általános felhasználó
+      teacher: Tanár
+      student: Tanuló
+      parent: Szülő
     plainPassword:
       first:
         label: Jelszó
       second:
         label: Jelszó mégegyszer
+    save:
+      label: Mentés
 api:
   doc:
     link: API dokumentáció

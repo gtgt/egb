@@ -4,11 +4,14 @@ namespace Egb\UserBundle\Entity;
 
 
 use FOS\UserBundle\Model\User as BaseUser;
+
 use Doctrine\ORM\Mapping as ORM;
+
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\VirtualProperty;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -25,6 +28,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ExclusionPolicy("all")
  */
 class User extends BaseUser {
+
+	/**
+	 * Set discrimiator value.
+	 * We cannot use Doctrine annotations, since it will see as a duplicate declaration.
+	 */
+	//protected $type = 'user';
+
 	/**
 	 * @ORM\Id
 	 * @ORM\Column(name="uid", type="integer")
@@ -64,6 +74,17 @@ class User extends BaseUser {
 
 	public function __get($property) {
 		if (property_exists(__CLASS__, $property)) return $this->{$property};
+	}
+
+	public function __call($method, $args = array()) {
+		$m = array();
+		if (preg_match('@^(get|set)([A-Z][A-Za-z0-9_]+)$@', $method, $m)) {
+			$action = $m[1];
+			$property = strtolower($m[2]);
+			if (property_exists(__CLASS__, $property)) {
+				if ($action == 'set') $this->{$property} = $args[0]; else return $this->{$property};
+			}
+		}
 	}
 
 }

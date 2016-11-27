@@ -4,14 +4,18 @@ root:
     _controller: FrameworkBundle:Redirect:urlRedirect
     path: /doc
     permanent: true
-fos_user:
+
+fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
 #REST
 rest :
   type : rest
   resource : "routing_rest.yml"
   prefix : /api
+  methods: [GET,POST,PUT,PATCH,DELETE]
 
 NelmioApiDocBundle:
   resource: "@NelmioApiDocBundle/Resources/config/routing.yml"

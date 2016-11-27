@@ -27,11 +27,18 @@ form:
       label: E-Mail
     type:
       label: Type
+      placeholder: -- Select type --
+      user: Simple user
+      teacher: Teacher
+      student: Student
+      parent: Parent
     plainPassword:
       first:
         label: Password
       second:
         label: Password again
+    save:
+      label: Save
 api:
   doc:
     link: API documentation
