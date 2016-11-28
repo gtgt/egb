@@ -7,10 +7,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use JMS\Serializer\Annotation\ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose;
-use JMS\Serializer\Annotation\Groups;
-use JMS\Serializer\Annotation\VirtualProperty;
+use JMS\Serializer\Annotation as Serializer;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -25,7 +22,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({"user" = "User", "teacher" = "Teacher", "student" = "Student", "parent" = "Paren"})
  *
- * @ExclusionPolicy("all")
+ * #Serializer\Discriminator(field = "type", map = {"user" = "User", "teacher" = "Teacher", "student" = "Student", "parent" = "Paren"})
+ * @Serializer\ExclusionPolicy("all")
  */
 class User extends BaseUser {
 
@@ -39,21 +37,24 @@ class User extends BaseUser {
 	 * @ORM\Id
 	 * @ORM\Column(name="uid", type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
-	 * @Expose
+	 *
+	 * @Serializer\Expose
 	 */
 	protected $id;
 
 	/**
 	 * @ORM\Column(type="string", length=64, nullable=true)
-	 * @Groups({"Me"})
-	 * @Expose
+	 *
+	 * @Serializer\Groups({"Me"})
+	 * @Serializer\Expose
 	 */
 	protected $firstname;
 
 	/**
 	 * @ORM\Column(type="string", length=64, nullable=true)
-	 * @Groups({"Me"})
-	 * @Expose
+	 *
+	 * @Serializer\Groups({"Me"})
+	 * @Serializer\Expose
 	 */
 	protected $lastname;
 
@@ -62,7 +63,8 @@ class User extends BaseUser {
 	 *
 	 * @param $separator : the separator between name and firstname (default: ' ')
 	 * @return String
-	 * @VirtualProperty
+	 *
+	 * @Serializer\VirtualProperty
 	 */
 	public function getUsedName($separator = ' ') {
 		if ($this->getName() != null && $this->getFirstName() != null) {

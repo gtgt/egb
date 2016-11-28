@@ -154,3 +154,8 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
     firewall_name: main
     user_class: Egb\UserBundle\Entity\User
+
+jms_serializer:
+    visitors:
+        json:
+            options: [JSON_PRETTY_PRINT]

@@ -4,10 +4,7 @@ namespace Egb\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use JMS\Serializer\Annotation\ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose;
-use JMS\Serializer\Annotation\Groups;
-use JMS\Serializer\Annotation\VirtualProperty;
+use JMS\Serializer\Annotation as Serializer;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,6 +13,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="parent")
  * @ORM\Entity
+ *
+ * @Serializer\ExclusionPolicy("all")
  */
 class Paren extends User {
 
@@ -29,6 +28,10 @@ class Paren extends User {
 	 * @var \Doctrine\Common\Collections\Collection
 	 *
 	 * @ORM\OneToMany(targetEntity="Student", mappedBy="parent")
+	 *
+	 * @Serializer\Type("ArrayCollection<Egb\UserBundle\Entity\Student>")
+	 * @Serializer\Groups({"Me"})
+	 * @Serializer\Expose
 	 */
 	private $students;
 

@@ -15,6 +15,7 @@ rest :
   type : rest
   resource : "routing_rest.yml"
   prefix : /api
+  defaults: {_format: html}
   methods: [GET,POST,PUT,PATCH,DELETE]
 
 NelmioApiDocBundle:

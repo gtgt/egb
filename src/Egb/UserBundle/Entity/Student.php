@@ -4,10 +4,7 @@ namespace Egb\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use JMS\Serializer\Annotation\ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose;
-use JMS\Serializer\Annotation\Groups;
-use JMS\Serializer\Annotation\VirtualProperty;
+use JMS\Serializer\Annotation as Serializer;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,6 +13,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="student")
  * @ORM\Entity
+ *
+ * @Serializer\ExclusionPolicy("all")
  */
 class Student extends User {
 
@@ -28,7 +27,10 @@ class Student extends User {
 	/**
 	 * @ORM\ManyToOne(targetEntity="Paren", inversedBy="students")
 	 * @ORM\JoinColumn(name="parent_uid", referencedColumnName="uid")
-	 * @Expose
+	 *
+	 * @Serializer\Type("Egb\UserBundle\Entity\Paren")
+	 * @Serializer\Groups({"Me"})
+	 * @Serializer\Expose
 	 */
 	private $parent;
 
@@ -37,7 +39,10 @@ class Student extends User {
 	 *
 	 * @ORM\ManyToOne(targetEntity="Clas", inversedBy="students")
 	 * @ORM\JoinColumn(name="clid", referencedColumnName="clid")
-	 * @Expose
+	 *
+	 * @Serializer\Type("Egb\UserBundle\Entity\Clas")
+	 * @Serializer\Groups({"Me"})
+	 * @Serializer\Expose
 	 */
 	private $class;
 
