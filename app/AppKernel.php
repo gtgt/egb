@@ -23,15 +23,12 @@ class AppKernel extends Kernel {
 			new Elao\Bundle\FormTranslationBundle\ElaoFormTranslationBundle(),
 			new Bazinga\Bundle\RestExtraBundle\BazingaRestExtraBundle(),
 			new FOS\UserBundle\FOSUserBundle(),
-			new Egb\UserBundle\UserBundle(),
 		);
 
 		if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-			$bundles[] = new AppBundle\AppBundle();
-			//$bundles[] = new Egb\UserBundle\UserBundle();
-			$bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
-			$bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-			$bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+			foreach(array('AppBundle\AppBundle', 'Egb\UserBundle\UserBundle', 'Symfony\Bundle\WebProfilerBundle\WebProfilerBundle', 'Sensio\Bundle\DistributionBundle\SensioDistributionBundle', 'Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle') as $bundleClass) {
+				if (class_exists($bundleClass)) $bundles[] = new $bundleClass();
+			}
 		}
 
 		return $bundles;

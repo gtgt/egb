@@ -1,6 +1,6 @@
-notes:
-  resource: "@AppBundle/Controller/NoteController.php"
-  type:     rest
+#notes:
+#  resource: "@AppBundle/Controller/NoteController.php"
+#  type:     rest
 
 rest_user:
   type : rest

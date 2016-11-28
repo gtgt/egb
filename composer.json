@@ -3,7 +3,7 @@
 	"license": "MIT",
 	"type": "project",
 	"description": "Electronic Grade Book (demo project)",
-	"minimum-stability": "dev",
+	"minimum-stability": "beta",
 	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
@@ -58,7 +58,8 @@
 	},
 	"config": {
 		"bin-dir": "bin",
-		"prefer-dist": true
+		"prefer-dist": true,
+		"no-dev": true
 	},
 	"extra": {
 		"symfony-app-dir": "app",

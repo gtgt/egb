@@ -31,22 +31,22 @@ class UserType extends AbstractType {
 				'first_options' => array('label' => true),
 				'second_options' => array('label' => true),
 				'required' => false,
-        'empty_data' => function($form) {
-            return $form->get('plainPassword')->getData();
-        },
+				'empty_data' => function($form) {
+						return $form->get('plainPassword')->getData();
+				},
 			))
 			->add('save', Type\SubmitType::class)
 			->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-        $user = $event->getData();
-        $form = $event->getForm();
+				$user = $event->getData();
+				$form = $event->getForm();
 
-        // check if the User object is "new"
-        // If no data is passed to the form, the data is "null".
-        // This should be considered a new "User"
-        if (!$user || null === $user->getId()) {
-            $fieldPassword = $form->get('password');
-        }
-    });
+				// check if the User object is "new"
+				// If no data is passed to the form, the data is "null".
+				// This should be considered a new "User"
+				if (!$user || null === $user->getId()) {
+						$fieldPassword = $form->get('plainPassword');
+				}
+		});
 	}
 
 	/**
