@@ -5,24 +5,10 @@ FOS\UserBundle\Model\User:
       expose: true
     salt :
       expose: true
-      groups: [Details]
+      groups: [Me]
     email:
       expose: true
       groups: [Me]
     enabled:
       expose: true
-  relations:
-    -
-      rel: self
-      href:
-        route: api_get_note
-        parameters:
-          id: expr(object.id)
-        absolute: true
-    -
-      rel: expr(object.type == 'teacher' || object.type == 'parent')
-      embed:
-        content: expr(object.students())
-        xmlElementName: students
-        exclusion:
-          exclude_if: expr(object.id === 0)
+      groups: [Details]

@@ -1,7 +1,9 @@
-#notes:
-#  resource: "@AppBundle/Controller/NoteController.php"
-#  type:     rest
-
 rest_user:
   type : rest
   resource: "@UserBundle/Resources/config/routing_rest.yml"
+rest_class:
+  type : rest
+  resource: "@ClassBundle/Resources/config/routing_rest.yml"
+rest_subject:
+  type : rest
+  resource: "@SubjectBundle/Resources/config/routing_rest.yml"

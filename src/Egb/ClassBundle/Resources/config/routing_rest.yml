@@ -1,0 +1,4 @@
+class:
+  type: rest
+  resource:     "ClassBundle:Class"
+  name_prefix:  api_

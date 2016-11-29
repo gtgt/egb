@@ -26,7 +26,7 @@ class AppKernel extends Kernel {
 		);
 
 		if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-			foreach(array('AppBundle\AppBundle', 'Egb\UserBundle\UserBundle', 'Symfony\Bundle\WebProfilerBundle\WebProfilerBundle', 'Sensio\Bundle\DistributionBundle\SensioDistributionBundle', 'Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle') as $bundleClass) {
+			foreach (array('AppBundle\AppBundle', 'Egb\UserBundle\UserBundle', 'Egb\ClassBundle\ClassBundle', 'Egb\SubjectBundle\SubjectBundle', 'Symfony\Bundle\WebProfilerBundle\WebProfilerBundle', 'Sensio\Bundle\DistributionBundle\SensioDistributionBundle', 'Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle') as $bundleClass) {
 				if (class_exists($bundleClass)) $bundles[] = new $bundleClass();
 			}
 		}

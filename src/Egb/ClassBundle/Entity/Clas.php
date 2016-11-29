@@ -1,6 +1,6 @@
 <?php
 
-namespace Egb\UserBundle\Entity;
+namespace Egb\ClassBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,7 +9,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Clas
+ * ClassEntity
  *
  * @ORM\Table(name="class")
  * @ORM\Entity
@@ -35,7 +35,7 @@ class Clas {
 
 	/**
 	 * @var \Doctrine\Common\Collections\Collection
-	 * @ORM\OneToOne(targetEntity="Teacher", mappedBy="class")
+	 * @ORM\OneToOne(targetEntity="Egb\UserBundle\Entity\Teacher", mappedBy="class")
 	 *
 	 * @Serializer\Type("Egb\UserBundle\Entity\Teacher")
 	 * @Serializer\Expose
@@ -45,7 +45,7 @@ class Clas {
 	/**
 	 * @var \Doctrine\Common\Collections\Collection
 	 *
-	 * @ORM\OneToMany(targetEntity="Student", mappedBy="class")
+	 * @ORM\OneToMany(targetEntity="Egb\UserBundle\Entity\Student", mappedBy="class")
 	 *
 	 * @Serializer\Type("ArrayCollection<Egb\UserBundle\Entity\Student>")
 	 * @Serializer\Expose

@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({"user" = "User", "teacher" = "Teacher", "student" = "Student", "parent" = "Paren"})
  *
- * #Serializer\Discriminator(field = "type", map = {"user" = "User", "teacher" = "Teacher", "student" = "Student", "parent" = "Paren"})
  * @Serializer\ExclusionPolicy("all")
  */
 class User extends BaseUser {
@@ -45,7 +44,7 @@ class User extends BaseUser {
 	/**
 	 * @ORM\Column(type="string", length=64, nullable=true)
 	 *
-	 * @Serializer\Groups({"Me"})
+	 * @Serializer\Groups({"Detail", "Me"})
 	 * @Serializer\Expose
 	 */
 	protected $firstname;
@@ -53,7 +52,7 @@ class User extends BaseUser {
 	/**
 	 * @ORM\Column(type="string", length=64, nullable=true)
 	 *
-	 * @Serializer\Groups({"Me"})
+	 * @Serializer\Groups({"Detail", "Me"})
 	 * @Serializer\Expose
 	 */
 	protected $lastname;
@@ -65,6 +64,7 @@ class User extends BaseUser {
 	 * @return String
 	 *
 	 * @Serializer\VirtualProperty
+	 * @Serializer\Groups({"Default", "Me"})
 	 */
 	public function getUsedName($separator = ' ') {
 		if ($this->getName() != null && $this->getFirstName() != null) {

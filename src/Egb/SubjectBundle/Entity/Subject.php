@@ -1,6 +1,6 @@
 <?php
 
-namespace Egb\UserBundle\Entity;
+namespace Egb\SubjectBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -36,7 +36,7 @@ class Subject {
 	/**
 	 * @var \Doctrine\Common\Collections\Collection
 	 *
-	 * @ORM\ManyToMany(targetEntity="Student")
+	 * @ORM\ManyToMany(targetEntity="Egb\UserBundle\Entity\Student")
 	 * @ORM\JoinTable(name="subject_students",
 	 *   joinColumns={@ORM\JoinColumn(name="suid", referencedColumnName="suid")},
 	 *   inverseJoinColumns={@ORM\JoinColumn(name="uid", referencedColumnName="uid")}
@@ -48,9 +48,9 @@ class Subject {
 	private $students;
 
 	/**
-	 * @var Teacher
+	 * @var \Egb\UserBundle\Entity\Teacher
 	 *
-	 * @ORM\ManyToOne(targetEntity="Teacher", inversedBy="subjects")
+	 * @ORM\ManyToOne(targetEntity="Egb\UserBundle\Entity\Teacher", inversedBy="subjects")
 	 * @ORM\JoinColumn(name="uid", referencedColumnName="uid")
 	 *
 	 * @Serializer\Type("Egb\UserBundle\Entity\Teacher")

@@ -1,11 +1,14 @@
 <?php
-namespace Egb\UserBundle\Repository;
+namespace Egb\SubjectBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping;
 
-class UserRepository extends EntityRepository {
+/**
+ * {@inheritDoc}
+ */
+class SubjectRepository extends EntityRepository {
 	/**
 	 * @var EntityManager
 	 */

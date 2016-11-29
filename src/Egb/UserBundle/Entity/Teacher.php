@@ -24,13 +24,13 @@ class Teacher extends User {
 	//protected $type = 'teacher';
 
 	/**
-	 * @var Clas
+	 * @var \Egb\ClassBundle\Entity\Clas
 	 *
-	 * @ORM\OneToOne(targetEntity="Clas", inversedBy="teacher")
+	 * @ORM\OneToOne(targetEntity="Egb\ClassBundle\Entity\Clas", inversedBy="teacher")
 	 * @ORM\JoinColumn(name="clid", referencedColumnName="clid", unique=true)
 	 *
-	 * @Serializer\Type("Egb\UserBundle\Entity\Clas")
-	 * @Serializer\Groups({"Me"})
+	 * @Serializer\Type("Egb\ClassBundle\Entity\Clas")
+	 * @Serializer\Groups({"Default", "Me"})
 	 * @Serializer\Expose
 	 */
 	private $class;
@@ -38,10 +38,10 @@ class Teacher extends User {
 	/**
 	 * @var \Doctrine\Common\Collections\Collection
 	 *
-	 * @ORM\OneToMany(targetEntity="Subject", mappedBy="teacher")
+	 * @ORM\OneToMany(targetEntity="Egb\SubjectBundle\Entity\Subject", mappedBy="teacher")
 	 *
-	 * @Serializer\Type("ArrayCollection<Egb\UserBundle\Entity\Subject>")
-	 * @Serializer\Groups({"Me"})
+	 * @Serializer\Type("ArrayCollection<Egb\SubjectBundle\Entity\Subject>")
+	 * @Serializer\Groups({"Default", "Me"})
 	 * @Serializer\Expose
 	 * @Serializer\MaxDepth(1)
 	 */

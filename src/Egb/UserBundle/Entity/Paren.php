@@ -30,8 +30,9 @@ class Paren extends User {
 	 * @ORM\OneToMany(targetEntity="Student", mappedBy="parent")
 	 *
 	 * @Serializer\Type("ArrayCollection<Egb\UserBundle\Entity\Student>")
-	 * @Serializer\Groups({"Me"})
+	 * @Serializer\Groups({"Default", "Me"})
 	 * @Serializer\Expose
+	 * @Serializer\MaxDepth(0)
 	 */
 	private $students;
 

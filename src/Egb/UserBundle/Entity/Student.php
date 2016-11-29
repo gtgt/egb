@@ -29,19 +29,19 @@ class Student extends User {
 	 * @ORM\JoinColumn(name="parent_uid", referencedColumnName="uid")
 	 *
 	 * @Serializer\Type("Egb\UserBundle\Entity\Paren")
-	 * @Serializer\Groups({"Me"})
+	 * @Serializer\Groups({"Default", "Me"})
 	 * @Serializer\Expose
 	 */
 	private $parent;
 
 	/**
-	 * @var Clas
+	 * @var \Egb\ClassBundle\Entity\Clas
 	 *
-	 * @ORM\ManyToOne(targetEntity="Clas", inversedBy="students")
+	 * @ORM\ManyToOne(targetEntity="Egb\ClassBundle\Entity\Clas", inversedBy="students")
 	 * @ORM\JoinColumn(name="clid", referencedColumnName="clid")
 	 *
-	 * @Serializer\Type("Egb\UserBundle\Entity\Clas")
-	 * @Serializer\Groups({"Me"})
+	 * @Serializer\Type("Egb\ClassBundle\Entity\Clas")
+	 * @Serializer\Groups({"Default", "Me"})
 	 * @Serializer\Expose
 	 */
 	private $class;

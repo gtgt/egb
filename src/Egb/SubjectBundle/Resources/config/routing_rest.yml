@@ -1,0 +1,4 @@
+class:
+  type: rest
+  resource:     "SubjectBundle:Subject"
+  name_prefix:  api_
