@@ -10,7 +10,7 @@
 
 	{% include "FOSUserBundle:Profile:show.html.twig" %}
 	<p>
-		<a href="{{ path('api_get_users') }}">{{ 'user.list.link'|trans }}</a> <br>
+		<a href="{{ path('api_get_user_list') }}">{{ 'user.list.link'|trans }}</a> <br>
 		[<a href="{{ path('api_remove_user', {'id': user.id}) }}">{{ 'user.remove.link'|trans }}</a>]
 		[<a href="{{ path('api_edit_user', {'id': user.id}) }}">{{ 'user.edit.link'|trans }}</a>]
 	</p>

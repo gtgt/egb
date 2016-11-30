@@ -27,10 +27,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User extends BaseUser {
 
 	/**
-	 * Set discrimiator value.
+	 * Provide discrimiator value.
 	 * We cannot use Doctrine annotations, since it will see as a duplicate declaration.
 	 */
-	//protected $type = 'user';
+	public function getUserType() {
+		return 'user';
+	}
 
 	/**
 	 * @ORM\Id
@@ -72,6 +74,10 @@ class User extends BaseUser {
 		} else {
 			return $this->getUsername();
 		}
+	}
+
+	public function getType() {
+
 	}
 
 	public function __get($property) {

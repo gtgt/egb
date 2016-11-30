@@ -1,4 +1,40 @@
 users:
   type: rest
-  resource:     "UserBundle:User"
-  name_prefix:  api_
+  resource: "UserBundle:User"
+
+students:
+  type: rest
+  resource: "UserBundle:Student"
+
+teachers:
+  type: rest
+  resource: "UserBundle:Teacher"
+
+parents:
+  type: rest
+  resource: "UserBundle:Parent"
+
+student_subjects:
+  type: rest
+  parent: students
+  resource: Egb\SubjectBundle\Controller\SubjectController
+
+student_class:
+  type: rest
+  parent: students
+  resource: Egb\ClassBundle\Controller\ClassController
+
+student_parent:
+  type: rest
+  parent: students
+  resource: "UserBundle:Parent"
+
+teacher_subjects:
+  type: rest
+  parent: teachers
+  resource: Egb\SubjectBundle\Controller\SubjectController
+
+teacher_class:
+  type: rest
+  parent: teachers
+  resource: Egb\ClassBundle\Controller\ClassController

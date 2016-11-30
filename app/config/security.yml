@@ -11,29 +11,29 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        all:
-            chain:
-                providers: [in_memory, fos_userbundle]
         in_memory:
             memory:
                 users:
-                    teacher: { password: teacher, roles: [ 'ROLE_TEACHER' ] }
-                    parent: { password: teacher, roles: [ 'ROLE_PARENT' ] }
-                    student: { password: teacher, roles: [ 'ROLE_STUDENT' ] }
+                    admin: { password: admin, roles: [ 'ROLE_SUPER_ADMIN' ] }
         fos_userbundle:
             id: fos_user.user_provider.username_email
+        all:
+            chain:
+                providers: [in_memory, fos_userbundle]
 
     firewalls:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
+        default:
             pattern: ^/
             anonymous: ~
-            stateless:  true
+            #stateless:  true
+            provider: all
             http_basic:
                 realm: "Electronic Grade Book REST API"
-                provider: all
+            form_login: ~
+            logout: ~
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }

@@ -3,6 +3,9 @@ nbproject
 build/
 vendor/
 web/bundles/
+web/css/
+web/js/
+web/fonts/
 app/config/parameters.yml
 app/bootstrap.php.cache
 app/SymfonyRequirements.php
@@ -16,3 +19,5 @@ bin/*
 composer.phar
 composer.lock
 src/AppBundle
+
+bin/

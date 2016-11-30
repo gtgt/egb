@@ -8,10 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FOS\RestBundle\Request\ParamFetcherInterface;
 
-use FOS\RestBundle\Controller\Annotations\Get;
-use FOS\RestBundle\Controller\Annotations\QueryParam;
-use FOS\RestBundle\Controller\Annotations\View;
-use FOS\RestBundle\Controller\Annotations\Version;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -21,14 +18,20 @@ use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
+/**
+ * Class controller
+ *
+ * @Rest\RouteResource("Subject")
+ * @Rest\Version("v1")
+ */
 class ClassController extends Controller {
 
-	private $entityClass = 'ClassBundle:Clas';
+	protected $entityClass = 'ClassBundle:Clas';
 
 	/**
 	 * @return \Doctrine\Common\Persistence\ObjectRepository|\Egb\ClassBundle\Repository\ClassRepository
 	 */
-	public function getClassRepository() {
+	public function getRepository() {
 		return $this->getDoctrine()->getRepository($this->entityClass);
 	}
 
@@ -42,16 +45,16 @@ class ClassController extends Controller {
 	 *   }
 	 * )
 	 *
-	 * @QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing classs.")
-	 * @QueryParam(name="limit", requirements="\d+", default="5", description="How many classs to return.")
+	 * @Rest\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing classs.")
+	 * @Rest\QueryParam(name="limit", requirements="\d+", default="5", description="How many classs to return.")
 	 *
-	 * @View()
+	 * @Rest\View(serializerEnableMaxDepthChecks=true)
 	 *
 	 * @param ParamFetcherInterface $paramFetcher param fetcher service
 	 *
 	 * @return array
 	 */
-	public function getClassesAction(ParamFetcherInterface $paramFetcher) {
+	public function getListAction(ParamFetcherInterface $paramFetcher) {
 		$offset = (int)$paramFetcher->get('offset');
 		$start = null == $offset ? 0 : $offset + 1;
 		$limit = $paramFetcher->get('limit');
@@ -70,14 +73,14 @@ class ClassController extends Controller {
 	 *   }
 	 * )
 	 *
-	 * @View(templateVar="class", serializerGroups={"Default","Details"})
+	 * @Rest\View(templateVar="class", serializerEnableMaxDepthChecks=true, serializerGroups={"Default","Details"})
 	 *
 	 * @param int $id the class name
 	 *
 	 * @return Entity\Clas|object
 	 * @throws NotFoundHttpException when class not exist
 	 */
-	public function getClassAction($id) {
+	public function getAction($id) {
 		$class = $this->getClassRepository()->find($id);
 		if (!is_object($class)) {
 			throw $this->createNotFoundException();

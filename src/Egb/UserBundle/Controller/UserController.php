@@ -10,10 +10,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 
 use FOS\RestBundle\Request\ParamFetcherInterface;
 
-use FOS\RestBundle\Controller\Annotations\Get;
-use FOS\RestBundle\Controller\Annotations\QueryParam;
-use FOS\RestBundle\Controller\Annotations\View;
-use FOS\RestBundle\Controller\Annotations\Version;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -24,19 +21,45 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
- * Class UserController
+ * User controller
  *
- * @Version("v1")
+ * @Rest\RouteResource("User")
+ * @Rest\Version("v1")
  */
 class UserController extends FOSRestController {
 
-	private $entityClass = 'UserBundle:User';
+	protected $entityClass = 'UserBundle:User';
+	protected $userType = 'user';
 
 	/**
 	 * @return \Doctrine\Common\Persistence\ObjectRepository|\Egb\UserBundle\Repository\UserRepository
 	 */
-	public function getUserRepository() {
+	public function getRepository() {
 		return $this->getDoctrine()->getRepository($this->entityClass);
+	}
+
+
+	/**
+	 * Get a Form instance.
+	 *
+	 * @param Entity\User|null $user
+	 * @param array $options
+	 * @param string|null $routeName
+	 * @return Form\UserType|\Symfony\Component\Form\Form
+	 */
+	protected function getForm($user = null, $options = array(), $actionRouteName = null) {
+		if (null !== $actionRouteName) {
+			$actionRouterParameters = array();
+			if (is_array($actionRouteName)) {
+				if (isset($actionRouteName[1])) $actionRouterParameters = $actionRouteName[1];
+				$actionRouteName = array_shift($actionRouteName);
+			} elseif ($user) {
+				$actionRouterParameters['id'] = $user->id;
+			}
+			$options['action'] = $this->generateUrl($actionRouteName, $actionRouterParameters);
+		}
+		if (null === $user) $user = new $this->entityClass();
+		return $this->createForm(Form\UserType::class, $user, $options);
 	}
 
 	/**
@@ -50,8 +73,8 @@ class UserController extends FOSRestController {
 	 * @return Entity\User
 	 * @throws \Egb\UserBundle\Exception\InvalidFormException
 	 */
-	private function processForm(Entity\User $user, array $parameters, $method = "PUT") {
-		$form = $this->formFactory->create(new Form\UserType(), $user, array('method' => $method));
+	protected function processForm($user = null, array $parameters, $method = "PUT") {
+		$form = $this->getForm($user, array('method' => $method));
 		$form->submit($parameters, 'PATCH' !== $method);
 		if ($form->isValid()) {
 
@@ -75,14 +98,39 @@ class UserController extends FOSRestController {
 	 *   }
 	 * )
 	 *
-	 * @View(
+	 * @Rest\View(
 	 *  templateVar = "form"
 	 * )
 	 *
+	 * @return FormTypeInterface|Rest\View
+	 */
+	public function newAction() {
+		return $this->getForm(null, array(), 'api_post_user');
+	}
+
+	/**
+	 * Presents the form to use to update an existing user.
+	 *
+	 * @ApiDoc(
+	 *   resource = true,
+	 *   statusCodes={
+	 *     200 = "Returned when successful",
+	 *     404 = "Returned when the user is not found"
+	 *   }
+	 * )
+	 *
+	 * @Rest\View(templateVar="user")
+	 *
+	 * @param int $id the user id
 	 * @return \Symfony\Component\Form\Form
 	 */
-	public function newUsersAction() {
-		return $this->createForm(Form\UserType::class);
+	public function editAction($id) {
+		$user = $this->getRepository()->find($id);
+		if (false === $user) {
+			throw $this->createNotFoundException("User does not exist.");
+		}
+
+		return $this->getForm($user, array(), 'api_patch_user');
 	}
 
 	/**
@@ -95,21 +143,21 @@ class UserController extends FOSRestController {
 	 *   }
 	 * )
 	 *
-	 * @QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing users.")
-	 * @QueryParam(name="limit", requirements="\d+", default="5", description="How many users to return.")
+	 * @Rest\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing users.")
+	 * @Rest\QueryParam(name="limit", requirements="\d+", default="5", description="How many users to return.")
 	 *
-	 * @View()
+	 * @Rest\View(serializerEnableMaxDepthChecks=true)
 	 *
 	 * @param ParamFetcherInterface $paramFetcher param fetcher service
 	 *
 	 * @return array
 	 */
-	public function getUsersAction(ParamFetcherInterface $paramFetcher) {
+	public function getListAction(ParamFetcherInterface $paramFetcher) {
 		$offset = (int)$paramFetcher->get('offset');
 		$start = null == $offset ? 0 : $offset + 1;
 		$limit = $paramFetcher->get('limit');
 
-		return array('offset' => $offset, 'limit' => $limit, 'start' => $start, 'users' => $this->getUserRepository()->findBy(array(), null, $limit, $offset));
+		return array('offset' => $offset, 'limit' => $limit, 'start' => $start, 'users' => $this->getRepository()->findBy(array(), null, $limit, $offset));
 	}
 
 	/**
@@ -123,15 +171,15 @@ class UserController extends FOSRestController {
 	 *   }
 	 * )
 	 *
-	 * @View(templateVar="user", serializerGroups={"Default","Details"})
+	 * @Rest\View(templateVar="user", serializerEnableMaxDepthChecks=true, serializerGroups={"Default","Details"})
 	 *
 	 * @param int $id the user name
 	 *
 	 * @return Entity\User|object
 	 * @throws NotFoundHttpException when user not exist
 	 */
-	public function getUserAction($id) {
-		$user = $this->getUserRepository()->find($id);
+	public function getAction($id) {
+		$user = $this->getRepository()->find($id);
 		if (!is_object($user)) {
 			throw $this->createNotFoundException();
 		}
@@ -140,7 +188,7 @@ class UserController extends FOSRestController {
 
 	/**
 	 *
-	 * @View(serializerGroups={"Default","Me","Details"})
+	 * @Rest\View(serializerGroups={"Default","Me","Details"})
 	 */
 	public function getMeAction() {
 		$this->forwardIfNotAuthenticated();
@@ -158,54 +206,6 @@ class UserController extends FOSRestController {
 	}
 
 	/**
-	 * List all users.
-	 *
-	 * @ApiDoc(
-	 *   resource = true,
-	 *   statusCodes = {
-	 *     200 = "Returned when successful"
-	 *   }
-	 * )
-	 *
-	 * @QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing users.")
-	 * @QueryParam(name="limit", requirements="\d+", default="5", description="How many users to return.")
-	 *
-	 * @View()
-	 *
-	 * @param ParamFetcherInterface $paramFetcher param fetcher service
-	 *
-	 * @return array
-	 */
-	public function getStudentsAction($id) {
-		return $this->getUserAction($id);
-	}
-
-	/**
-	 * Presents the form to use to update an existing user.
-	 *
-	 * @ApiDoc(
-	 *   resource = true,
-	 *   statusCodes={
-	 *     200 = "Returned when successful",
-	 *     404 = "Returned when the user is not found"
-	 *   }
-	 * )
-	 *
-	 * @View(templateVar="user")
-	 *
-	 * @param int $id the user id
-	 * @return \Symfony\Component\Form\Form
-	 */
-	public function editUserAction($id) {
-		$user = $this->getUserRepository()->find($id);
-		if (false === $user) {
-			throw $this->createNotFoundException("User does not exist.");
-		}
-
-		return $this->createForm(Form\UserType::class, $user);
-	}
-
-	/**
 	 * Create a User from the submitted data.
 	 *
 	 * @ApiDoc(
@@ -218,20 +218,20 @@ class UserController extends FOSRestController {
 	 *   }
 	 * )
 	 *
-	 * @View(
-	 *  template = "UserBundle:User:newUser.html.twig",
+	 * @Rest\View(
+	 *  template = "UserBundle:User:new.html.twig",
 	 *  statusCode = Response::HTTP_BAD_REQUEST,
 	 *  templateVar = "form"
 	 * )
 	 *
 	 * @param Request $request the request object
 	 *
-	 * @return FormTypeInterface|View
+	 * @return FormTypeInterface|Rest\View
 	 */
-	public function postUserAction(Request $request) {
+	public function postAction(Request $request) {
 		try {
-			$newUser = $this->processForm(new $this->entityClass(), $request->request->all(), 'POST');
-			return $this->routeRedirectView('api_get_user', array('id' => $newUser->getId(), '_format' => $request->get('_format')), Response::HTTP_CREATED);
+			$newUser = $this->processForm(null, $request->request->all(), 'POST');
+			return $this->routeRedirectView('api_get_user', array('id' => $newUser), Response::HTTP_CREATED);
 		} catch (Exception\InvalidFormException $exception) {
 			return $exception->getForm();
 		}
@@ -250,7 +250,7 @@ class UserController extends FOSRestController {
 	 *   }
 	 * )
 	 *
-	 * @View(
+	 * @Rest\View(
 	 *  template = "UserBundle:User:editUser.html.twig",
 	 *  templateVar = "form"
 	 * )
@@ -258,20 +258,20 @@ class UserController extends FOSRestController {
 	 * @param Request $request the request object
 	 * @param int $id the user id
 	 *
-	 * @return FormTypeInterface|View
+	 * @return FormTypeInterface|Rest\View
 	 *
 	 * @throws NotFoundHttpException when user not exist
 	 */
-	public function putUserAction(Request $request, $id) {
+	public function putAction(Request $request, $id) {
 		try {
-			if (!($user = $this->getUserRepository()->find($id))) {
+			if (!($user = $this->getRepository()->find($id))) {
 				$statusCode = Response::HTTP_CREATED;
-				$user = $this->processForm(new $this->entityClass(), $request->request->all(), 'POST');
+				$user = $this->processForm(null, $request->request->all(), 'POST');
 			} else {
 				$statusCode = Response::HTTP_NO_CONTENT;
 				$user = $this->processForm($user, $request->request->all(), 'PUT');
 			}
-			return $this->routeRedirectView('api_get_user', array('id' => $user->getId(), '_format' => $request->get('_format')), $statusCode);
+			return $this->routeRedirectView('api_get_user', array('user' => $user), $statusCode);
 		} catch (Exception\InvalidFormException $exception) {
 			return $exception->getForm();
 		}
@@ -289,22 +289,22 @@ class UserController extends FOSRestController {
 	 *   }
 	 * )
 	 *
-	 * @View(
-	 *  template = "UserBundle:User:editUser.html.twig",
+	 * @Rest\View(
+	 *  template = "UserBundle:User:edit.html.twig",
 	 *  templateVar = "form"
 	 * )
 	 *
 	 * @param Request $request the request object
 	 * @param int $id the user id
 	 *
-	 * @return FormTypeInterface|View
+	 * @return FormTypeInterface|Rest\View
 	 *
 	 * @throws NotFoundHttpException when user not exist
 	 */
-	public function patchUserAction(Request $request, $id) {
+	public function patchAction(Request $request, $id) {
 		try {
-			$user = $this->processForm($this->getUserRepository()->find($id), $request->request->all(), 'PATCH');
-			return $this->routeRedirectView('api_get_user', array('id' => $user->getId(), '_format' => $request->get('_format')), Response::HTTP_NO_CONTENT);
+			$user = $this->processForm($this->getRepository()->find($id), $request->request->all(), 'PATCH');
+			return $this->routeRedirectView('api_get_user', array('user' => $user), Response::HTTP_NO_CONTENT);
 		} catch (Exception\InvalidFormException $exception) {
 			return $exception->getForm();
 		}
@@ -322,14 +322,14 @@ class UserController extends FOSRestController {
 	 *
 	 * @param int $id the user id
 	 *
-	 * @return View
+	 * @return FormTypeInterface|Rest\View
 	 */
-	public function deleteUserAction($id) {
+	public function deleteAction($id) {
 		$this->getUserManager()->remove($id);
 
 		// There is a debate if this should be a 404 or a 204
 		// see http://leedavis81.github.io/is-a-http-delete-requests-idempotent/
-		return $this->routeRedirectView('get_users', array(), Response::HTTP_NO_CONTENT);
+		return $this->routeRedirectView('get_user_list', array(), Response::HTTP_NO_CONTENT);
 	}
 
 	/**
@@ -344,9 +344,9 @@ class UserController extends FOSRestController {
 	 *
 	 * @param int $id the user id
 	 *
-	 * @return View
+	 * @return FormTypeInterface|Rest\View
 	 */
-	public function removeUserAction($id) {
-		return $this->deleteUsersAction($id);
+	public function removeAction($id) {
+		return $this->deleteAction($id);
 	}
 }

@@ -17,12 +17,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Serializer\ExclusionPolicy("all")
  */
 class Paren extends User {
-
 	/**
-	 * Set discrimiator value.
+	 * Provide discrimiator value.
 	 * We cannot use Doctrine annotations, since it will see as a duplicate declaration.
 	 */
-	//protected $type = 'parent';
+	public function getUserType() {
+		return 'parent';
+	}
 
 	/**
 	 * @var \Doctrine\Common\Collections\Collection
@@ -32,15 +33,8 @@ class Paren extends User {
 	 * @Serializer\Type("ArrayCollection<Egb\UserBundle\Entity\Student>")
 	 * @Serializer\Groups({"Default", "Me"})
 	 * @Serializer\Expose
-	 * @Serializer\MaxDepth(0)
+	 * @Serializer\MaxDepth(1)
 	 */
 	private $students;
-
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		$this->students = new \Doctrine\Common\Collections\ArrayCollection();
-	}
 }
 

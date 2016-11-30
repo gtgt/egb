@@ -15,27 +15,28 @@ class UserType extends AbstractType {
 	 * @param array $options
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options) {
+		$user = $builder->getData();
 		$builder->add('username', Type\TextType::class)->add('firstname', Type\TextType::class)->add('lastname', Type\TextType::class)
-			->add('type', Type\ChoiceType::class, array(
+			->add('userType', Type\ChoiceType::class, array(
+				'disabled' => ($user && (null !== $user->getId())),
 				'required' => true,
 				'placeholder' => 'form.user.type.placeholder',
+				'label' => 'form.user.type.label',
 				'choices' => array(
 					'form.user.type.teacher' => 'teacher',
 					'form.user.type.student' => 'student',
 					'form.user.type.parent' => 'parent',
 				),
+				'empty_data' => array($user->getUserType()),
 			))
 			->add('email', Type\EmailType::class)
 			->add('plainPassword', Type\RepeatedType::class, array(
 				'type' => Type\PasswordType::class,
 				'first_options' => array('label' => true),
 				'second_options' => array('label' => true),
-				'required' => false,
-				'empty_data' => function($form) {
-						return $form->get('plainPassword')->getData();
-				},
+				'required' => false
 			))
-			->add('save', Type\SubmitType::class)
+			->add('save', Type\SubmitType::class)/*
 			->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
 				$user = $event->getData();
 				$form = $event->getForm();
@@ -43,10 +44,11 @@ class UserType extends AbstractType {
 				// check if the User object is "new"
 				// If no data is passed to the form, the data is "null".
 				// This should be considered a new "User"
-				if (!$user || null === $user->getId()) {
-						$fieldPassword = $form->get('plainPassword');
+				if ($user && (null !== $user->getId())) {
+						$fieldType = $form->get('type');
+						$fieldType->setData($user->getUserType());
 				}
-		});
+		})*/;
 	}
 
 	/**

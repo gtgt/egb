@@ -34,20 +34,6 @@ class Subject {
 	private $name;
 
 	/**
-	 * @var \Doctrine\Common\Collections\Collection
-	 *
-	 * @ORM\ManyToMany(targetEntity="Egb\UserBundle\Entity\Student")
-	 * @ORM\JoinTable(name="subject_students",
-	 *   joinColumns={@ORM\JoinColumn(name="suid", referencedColumnName="suid")},
-	 *   inverseJoinColumns={@ORM\JoinColumn(name="uid", referencedColumnName="uid")}
-	 *  )
-	 *
-	 * @Serializer\Type("ArrayCollection<Egb\UserBundle\Entity\Student>")
-	 * @Serializer\Expose
-	 */
-	private $students;
-
-	/**
 	 * @var \Egb\UserBundle\Entity\Teacher
 	 *
 	 * @ORM\ManyToOne(targetEntity="Egb\UserBundle\Entity\Teacher", inversedBy="subjects")
@@ -55,16 +41,28 @@ class Subject {
 	 *
 	 * @Serializer\Type("Egb\UserBundle\Entity\Teacher")
 	 * @Serializer\Expose
+	 * @Serializer\MaxDepth(1)
 	 */
 	private $teacher;
 
-
 	/**
-	 * Constructor
+	 * @var \Doctrine\Common\Collections\Collection
+	 *
+	 * @ORM\ManyToMany(targetEntity="Egb\UserBundle\Entity\Student")
+	 * @ORM\JoinTable(name="subject_students",
+	 *   joinColumns={
+	 *     @ORM\JoinColumn(name="suid", referencedColumnName="suid")
+	 *   },
+	 *   inverseJoinColumns={
+	 *     @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+	 *   }
+	 * )
+	 *
+	 * @Serializer\Type("ArrayCollection<Egb\UserBundle\Entity\Student>")
+	 * @Serializer\Expose
+	 * @Serializer\MaxDepth(2)
 	 */
-	public function __construct() {
-		$this->students = new \Doctrine\Common\Collections\ArrayCollection();
-	}
+	private $students;
 
 }
 

@@ -11,5 +11,7 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
-    locale:            en
+    locale:            hu
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    admin_skin:        skin-red

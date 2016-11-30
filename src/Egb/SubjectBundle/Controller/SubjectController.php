@@ -8,10 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FOS\RestBundle\Request\ParamFetcherInterface;
 
-use FOS\RestBundle\Controller\Annotations\Get;
-use FOS\RestBundle\Controller\Annotations\QueryParam;
-use FOS\RestBundle\Controller\Annotations\View;
-use FOS\RestBundle\Controller\Annotations\Version;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -21,14 +18,20 @@ use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
+/**
+ * Subject controller
+ *
+ * @Rest\RouteResource("Subject")
+ * @Rest\Version("v1")
+ */
 class SubjectController extends Controller {
 
-	private $entityClass = 'SubjectBundle:Subject';
+	protected $entityClass = 'SubjectBundle:Subject';
 
 	/**
 	 * @return \Doctrine\Common\Persistence\ObjectRepository|\Egb\SubjectBundle\Repository\SubjectRepository
 	 */
-	public function getSubjectRepository() {
+	public function getRepository() {
 		return $this->getDoctrine()->getRepository($this->entityClass);
 	}
 
@@ -42,16 +45,16 @@ class SubjectController extends Controller {
 	 *   }
 	 * )
 	 *
-	 * @QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing subjects.")
-	 * @QueryParam(name="limit", requirements="\d+", default="5", description="How many subjects to return.")
+	 * @Rest\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing subjects.")
+	 * @Rest\QueryParam(name="limit", requirements="\d+", default="5", description="How many subjects to return.")
 	 *
-	 * @View()
+	 * @Rest\View(serializerEnableMaxDepthChecks=true)
 	 *
 	 * @param ParamFetcherInterface $paramFetcher param fetcher service
 	 *
 	 * @return array
 	 */
-	public function getSubjectsAction(ParamFetcherInterface $paramFetcher) {
+	public function getListAction(ParamFetcherInterface $paramFetcher) {
 		$offset = (int)$paramFetcher->get('offset');
 		$start = null == $offset ? 0 : $offset + 1;
 		$limit = $paramFetcher->get('limit');
@@ -70,14 +73,14 @@ class SubjectController extends Controller {
 	 *   }
 	 * )
 	 *
-	 * @View(templateVar="subject", serializerGroups={"Default","Details"})
+	 * @Rest\View(templateVar="subject", serializerEnableMaxDepthChecks=true, serializerGroups={"Default","Details"})
 	 *
 	 * @param int $id the subject name
 	 *
 	 * @return Entity\Subject|object
 	 * @throws NotFoundHttpException when subject not exist
 	 */
-	public function getSubjectAction($id) {
+	public function getAction($id) {
 		$subject = $this->getSubjectRepository()->find($id);
 		if (!is_object($subject)) {
 			throw $this->createNotFoundException();

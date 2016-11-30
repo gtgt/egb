@@ -1,5 +1,4 @@
 <?php
-
 namespace Egb\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -18,10 +17,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Teacher extends User {
 	/**
-	 * Set discrimiator value.
+	 * Provide discrimiator value.
 	 * We cannot use Doctrine annotations, since it will see as a duplicate declaration.
 	 */
-	//protected $type = 'teacher';
+	public function getUserType() {
+		return 'teacher';
+	}
 
 	/**
 	 * @var \Egb\ClassBundle\Entity\Clas
@@ -30,7 +31,7 @@ class Teacher extends User {
 	 * @ORM\JoinColumn(name="clid", referencedColumnName="clid", unique=true)
 	 *
 	 * @Serializer\Type("Egb\ClassBundle\Entity\Clas")
-	 * @Serializer\Groups({"Default", "Me"})
+	 * @Serializer\Groups({"Default", "Detail"})
 	 * @Serializer\Expose
 	 */
 	private $class;
@@ -41,14 +42,11 @@ class Teacher extends User {
 	 * @ORM\OneToMany(targetEntity="Egb\SubjectBundle\Entity\Subject", mappedBy="teacher")
 	 *
 	 * @Serializer\Type("ArrayCollection<Egb\SubjectBundle\Entity\Subject>")
-	 * @Serializer\Groups({"Default", "Me"})
+	 * @Serializer\Groups({"Default", "Detail"})
 	 * @Serializer\Expose
-	 * @Serializer\MaxDepth(1)
+	 * @Serializer\MaxDepth(2)
 	 */
 	private $subjects;
 
-	public function __construct() {
-		$this->subjects = new \Doctrine\Common\Collections\ArrayCollection();
-	}
 }
 

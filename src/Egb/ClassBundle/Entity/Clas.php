@@ -39,6 +39,7 @@ class Clas {
 	 *
 	 * @Serializer\Type("Egb\UserBundle\Entity\Teacher")
 	 * @Serializer\Expose
+	 * @Serializer\MaxDepth(3)
 	 */
 	private $teacher;
 
@@ -49,15 +50,9 @@ class Clas {
 	 *
 	 * @Serializer\Type("ArrayCollection<Egb\UserBundle\Entity\Student>")
 	 * @Serializer\Expose
+	 * @Serializer\MaxDepth(2)
 	 */
 	private $students;
-
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		$this->students = new \Doctrine\Common\Collections\ArrayCollection();
-	}
 
 }
 

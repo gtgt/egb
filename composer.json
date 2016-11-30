@@ -3,40 +3,46 @@
 	"license": "MIT",
 	"type": "project",
 	"description": "Electronic Grade Book (demo project)",
-	"minimum-stability": "beta",
+	"minimum-stability": "dev",
 	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
 			"": "src/"
 		}
 	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/avanzu/AdminThemeBundle"
+		}
+	],
 	"require": {
 		"php": ">=5.7.0",
 		"symfony/symfony": "^3.1.0",
 
-		"doctrine/doctrine-bundle": "@dev",
-		"doctrine/orm": "@dev",
-		"elao/form-translation-bundle": "@dev",
-		"friendsofsymfony/http-cache-bundle": "@dev",
-		"friendsofsymfony/rest-bundle": "@dev",
-		"friendsofsymfony/user-bundle": "@dev",
-		"hautelook/templated-uri-bundle": "@dev",
-		"incenteev/composer-parameter-handler": "@dev",
-		"jms/serializer-bundle": "@dev",
-		"leafo/scssphp": "@dev",
-		"nelmio/api-doc-bundle": "@dev",
-		"patchwork/jsqueeze": "@dev",
-		"sensio/distribution-bundle": "@dev",
-		"sensio/framework-extra-bundle": "@dev",
-		"symfony/assetic-bundle": "@dev",
-		"symfony/monolog-bundle": "@dev",
-		"symfony/swiftmailer-bundle": "@dev",
-		"twbs/bootstrap-sass": "@dev",
-		"willdurand/hateoas-bundle": "@dev",
-		"willdurand/rest-extra-bundle": "@dev"
+		"doctrine/doctrine-bundle": "@stable",
+		"doctrine/orm": "@stable",
+		"elao/form-translation-bundle": "@stable",
+		"friendsofsymfony/http-cache-bundle": "@stable",
+		"friendsofsymfony/rest-bundle": "@stable",
+		"friendsofsymfony/user-bundle": "@beta",
+		"hautelook/templated-uri-bundle": "@stable",
+		"incenteev/composer-parameter-handler": "@stable",
+		"jms/serializer-bundle": "@stable",
+		"leafo/scssphp": "@stable",
+		"nelmio/api-doc-bundle": "@stable",
+		"patchwork/jsqueeze": "@stable",
+		"sensio/distribution-bundle": "@stable",
+		"sensio/framework-extra-bundle": "@stable",
+		"symfony/assetic-bundle": "@stable",
+		"symfony/monolog-bundle": "@stable",
+		"symfony/swiftmailer-bundle": "@stable",
+		"twbs/bootstrap-sass": "@stable",
+		"willdurand/hateoas-bundle": "@stable",
+		"willdurand/rest-extra-bundle": "@stable"
 	},
 	"require-dev": {
-		"sensio/generator-bundle": "@dev"
+		"sensio/generator-bundle": "@stable"
 	},
 	"scripts": {
 		"post-install-cmd": [

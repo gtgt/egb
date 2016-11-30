@@ -2,7 +2,7 @@
 
 {% block title "EGB - Users" %}
 {% trans_default_domain 'UserBundle' %}
-{% block pagetitle "user.edit.headline"|trans({'%username%': user.username}) %}
+{% block pagetitle "user.edit.headline"|trans({'%username%': form.username.vars.value}) %}
 
 {% block content_header '' %}
 

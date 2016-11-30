@@ -1,0 +1,49 @@
+<?php
+
+namespace Egb\UserBundle\Controller;
+
+use Egb\UserBundle\Entity;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use FOS\RestBundle\Request\ParamFetcherInterface;
+
+use FOS\RestBundle\Controller\Annotations as Rest;
+
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+
+/**
+ * Teacher controller (extends user controller)
+ *
+ * @Rest\RouteResource("Teacher")
+ * @Rest\Version("v1")
+ */
+class TeacherController extends UserController {
+
+	protected $entityClass = 'UserBundle:Teacher';
+
+	/**
+	 * Get consulting hours
+	 *
+	 * @ApiDoc(
+	 *   resource = true,
+	 *   statusCodes = {
+	 *     200 = "Returned when successful"
+	 *   }
+	 * )
+	 *
+	 * @Rest\View(serializerEnableMaxDepthChecks=true)
+	 *
+	 * @return array
+	 */
+	public function getTeacherConsultinghoursAction($id) {
+		return $this->getUserAction($id);
+	}
+
+}

@@ -17,20 +17,22 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Serializer\ExclusionPolicy("all")
  */
 class Student extends User {
-
 	/**
-	 * Set discrimiator value.
+	 * Provide discrimiator value.
 	 * We cannot use Doctrine annotations, since it will see as a duplicate declaration.
 	 */
-	//protected $type = 'student';
+	public function getUserType() {
+		return 'student';
+	}
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Paren", inversedBy="students")
-	 * @ORM\JoinColumn(name="parent_uid", referencedColumnName="uid")
+	 * @ORM\JoinColumn(name="parent_uid", referencedColumnName="uid", unique=true)
 	 *
 	 * @Serializer\Type("Egb\UserBundle\Entity\Paren")
 	 * @Serializer\Groups({"Default", "Me"})
 	 * @Serializer\Expose
+	 * @Serializer\MaxDepth(1)
 	 */
 	private $parent;
 
@@ -38,14 +40,26 @@ class Student extends User {
 	 * @var \Egb\ClassBundle\Entity\Clas
 	 *
 	 * @ORM\ManyToOne(targetEntity="Egb\ClassBundle\Entity\Clas", inversedBy="students")
-	 * @ORM\JoinColumn(name="clid", referencedColumnName="clid")
+	 * @ORM\JoinColumn(name="clid", referencedColumnName="clid", unique=true)
 	 *
 	 * @Serializer\Type("Egb\ClassBundle\Entity\Clas")
-	 * @Serializer\Groups({"Default", "Me"})
+	 * @Serializer\Groups({"Default", "Detail", "Me"})
 	 * @Serializer\Expose
+	 * @Serializer\MaxDepth(2)
 	 */
 	private $class;
 
+	/**
+	 * @var \Doctrine\Common\Collections\Collection
+	 *
+	 * @ORM\ManyToMany(targetEntity="Egb\SubjectBundle\Entity\Subject", mappedBy="students")
+	 *
+	 * @Serializer\Type("ArrayCollection<Egb\SubjectBundle\Entity\Subject>")
+	 * @Serializer\Groups({"Default", "Detail", "Me"})
+	 * @Serializer\Expose
+	 * @Serializer\MaxDepth(1)
+	 */
+	private $subjects;
 
 }
 
