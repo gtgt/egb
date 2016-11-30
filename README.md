@@ -14,6 +14,5 @@ Pre-requirements
 
 Install
 -------
- - php app/console avanzu:admin:initialize
  - php app/console assetic:dump
  - php app/console doctrine:schema:update --force
