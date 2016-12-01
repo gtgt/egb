@@ -1,1 +1,7 @@
-1: ????
+nav:
+    current: Jelenlegi
+    link:
+        users: Felhasználók
+        api_doc: API Dokumentáció
+login:
+    signin: Bejelentkezés

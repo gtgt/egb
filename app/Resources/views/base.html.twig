@@ -17,7 +17,7 @@
 	<!-- Latest compiled and minified CSS -->
 	{#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">#}
 	{% stylesheets '@bootstrap_css' %}
-	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+	<link rel="stylesheet" type="text/css" media="screen" href="{{asset_url}}"/>
 	{% endstylesheets %}
 	<!-- Latest compiled and minified JavaScript -->
 
@@ -29,12 +29,65 @@
 </head>
 
 <body>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">Brand</a>
+		</div>
+
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-left">
+				<li class="active"><a href="{{path('api_get_user_list')}}">{{'nav.link.users'|trans}} <span class="sr-only">({{'nav.current'|trans}})</span></a></li>
+				<li><a href="{{path('nelmio_api_doc_index')}}">{{'nav.link.apidoc'|trans}}</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+					<li>
+						<a href="{{path('api_get_user_me')}}">{{'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle')}}</a>
+					</li>
+					<li>
+						<a href="{{path('fos_user_security_logout')}}">{{'layout.logout'|trans({}, 'FOSUserBundle')}}</a>
+					</li>
+				{% else %}
+					<li>
+						<a href="{{path('fos_user_security_login')}}">{{'layout.login'|trans({}, 'FOSUserBundle')}}</a>
+					</li>
+				{% endif %}
+				</li>
+			</ul>
+			<form class="navbar-form navbar-right" role="search">
+				<div class="form-group">
+					<input class="form-control" placeholder="Search" type="text">
+				</div>
+				<button type="submit" class="btn btn-link">Submit</button>
+			</form>
+		</div>
+	</div>
+</nav>
 
 <div class="container">
 	{% if block('pagetitle') is not empty %}
-	<div class="page-header">
-		<h1>{% block pagetitle "" %}</h1>
-	</div>
+		<div class="page-header">
+			<h1>{% block pagetitle "" %}</h1>
+		</div>
+	{% endif %}
+
+	{% if app.request.hasPreviousSession %}
+		{% for type, messages in app.session.flashbag.all() %}
+			{% for message in messages %}
+				<div class="alert alert-dismissible alert-{{type}}">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<h4 class="hidden"></h4>
+					{{message}}
+				</div>
+			{% endfor %}
+		{% endfor %}
 	{% endif %}
 	{% block content %}{% endblock %}
 </div>
@@ -46,7 +99,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 {#<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>#}
 {% javascripts '@bootstrap_js' %}
-<script type="text/javascript" src="{{ asset_url }}"></script>
+<script type="text/javascript" src="{{asset_url}}"></script>
 {% endjavascripts %}
 {% block javascripts %}{% endblock %}
 </body>

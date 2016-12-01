@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Student
  *
+ * @ORM\Entity(repositoryClass="Egb\UserBundle\Repository\UserRepository")
  * @ORM\Table(name="student")
- * @ORM\Entity
  *
  * @Serializer\ExclusionPolicy("all")
  */

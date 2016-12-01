@@ -13,10 +13,10 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-
+use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -30,12 +30,17 @@ class UserController extends FOSRestController {
 
 	protected $entityClass = 'UserBundle:User';
 	protected $userType = 'user';
+	/**
+	 * @var \Egb\UserBundle\Repository\UserRepository
+	 */
+	private $em;
 
 	/**
-	 * @return \Doctrine\Common\Persistence\ObjectRepository|\Egb\UserBundle\Repository\UserRepository
+	 * @return \Egb\UserBundle\Repository\UserRepository
 	 */
 	public function getRepository() {
-		return $this->getDoctrine()->getRepository($this->entityClass);
+		if (!isset($em)) $this->em = $this->getDoctrine()->getRepository($this->entityClass);
+		return $this->em;
 	}
 
 
@@ -48,6 +53,8 @@ class UserController extends FOSRestController {
 	 * @return Form\UserType|\Symfony\Component\Form\Form
 	 */
 	protected function getForm($user = null, $options = array(), $actionRouteName = null) {
+		//default options
+		$options = array_merge(array('allow_extra_fields' => true), $options);
 		if (null !== $actionRouteName) {
 			$actionRouterParameters = array();
 			if (is_array($actionRouteName)) {
@@ -79,9 +86,7 @@ class UserController extends FOSRestController {
 		if ($form->isValid()) {
 
 			$user = $form->getData();
-			$this->om->persist($user);
-			$this->om->flush($user);
-
+			$this->getRepository()->update($user);
 			return $user;
 		}
 
@@ -161,6 +166,28 @@ class UserController extends FOSRestController {
 	}
 
 	/**
+	 * @ApiDoc(
+	 *   output = "Egb\UserBundle\Model\User",
+	 *   statusCodes = {
+	 *     200 = "Returned when successful",
+	 *     404 = "Returned when the user is not found"
+	 *   }
+	 * )
+	 * @Rest\View(
+	 *   template = "UserBundle:User:get.html.twig",
+	 *   templateVar="user",
+	 *   serializerEnableMaxDepthChecks=true,
+	 *   serializerGroups={"Default","Me","Details"},
+	 * )
+	 * @return Entity\User|object
+	 * @throws AccessDeniedHttpException when not lgged in
+	 */
+	public function getMeAction() {
+		$this->forwardIfNotAuthenticated();
+		return $this->getUser();
+	}
+
+	/**
 	 * Get a single user.
 	 *
 	 * @ApiDoc(
@@ -171,7 +198,12 @@ class UserController extends FOSRestController {
 	 *   }
 	 * )
 	 *
-	 * @Rest\View(templateVar="user", serializerEnableMaxDepthChecks=true, serializerGroups={"Default","Details"})
+	 * @Rest\View(
+	 *   template = "UserBundle:User:get.html.twig",
+	 *   templateVar="user",
+	 *   serializerEnableMaxDepthChecks=true,
+	 *   serializerGroups={"Default","Details"}
+	 * )
 	 *
 	 * @param int $id the user name
 	 *
@@ -184,15 +216,6 @@ class UserController extends FOSRestController {
 			throw $this->createNotFoundException();
 		}
 		return $user;
-	}
-
-	/**
-	 *
-	 * @Rest\View(serializerGroups={"Default","Me","Details"})
-	 */
-	public function getMeAction() {
-		$this->forwardIfNotAuthenticated();
-		return $this->getUser();
 	}
 
 	/**
@@ -304,7 +327,7 @@ class UserController extends FOSRestController {
 	public function patchAction(Request $request, $id) {
 		try {
 			$user = $this->processForm($this->getRepository()->find($id), $request->request->all(), 'PATCH');
-			return $this->routeRedirectView('api_get_user', array('user' => $user), Response::HTTP_NO_CONTENT);
+			return $this->routeRedirectView('api_get_user', array('id' => $user->id), Response::HTTP_NO_CONTENT);
 		} catch (Exception\InvalidFormException $exception) {
 			return $exception->getForm();
 		}

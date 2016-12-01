@@ -20,14 +20,14 @@ class UserType extends AbstractType {
 			->add('userType', Type\ChoiceType::class, array(
 				'disabled' => ($user && (null !== $user->getId())),
 				'required' => true,
-				'placeholder' => 'form.user.type.placeholder',
-				'label' => 'form.user.type.label',
+				'placeholder' => 'user.type.placeholder',
+				'label' => 'user.type.label',
 				'choices' => array(
-					'form.user.type.teacher' => 'teacher',
-					'form.user.type.student' => 'student',
-					'form.user.type.parent' => 'parent',
+					'user.type.teacher' => 'teacher',
+					'user.type.student' => 'student',
+					'user.type.parent' => 'parent',
 				),
-				'empty_data' => array($user->getUserType()),
+				'empty_data' => array($user ? $user->getUserType() : 'user'),
 			))
 			->add('email', Type\EmailType::class)
 			->add('plainPassword', Type\RepeatedType::class, array(
@@ -36,7 +36,7 @@ class UserType extends AbstractType {
 				'second_options' => array('label' => true),
 				'required' => false
 			))
-			->add('save', Type\SubmitType::class)/*
+			->add('submit', Type\SubmitType::class, array('attr' => array('class' => 'btn-primary pull-right')))/*
 			->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
 				$user = $event->getData();
 				$form = $event->getForm();

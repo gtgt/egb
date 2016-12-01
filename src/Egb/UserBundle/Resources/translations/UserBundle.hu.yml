@@ -1,8 +1,9 @@
 offset: eltolás
 limit: limit
 user:
+  common:
+    cancel: Mégse
   list:
-    link: vissza a felhasználókhoz
     headline: Felhasználók
     empty: Nincs felhasználó
   new:
@@ -15,30 +16,36 @@ user:
     submit: módosítás
   remove:
     link: törlés
-form:
-  user:
-    username:
-      label: Fióknév
-    lastname:
-      label: Vezetéknév
-    firstname:
-      label: Keresztnév
-    email:
-      label: E-Mail
-    type:
-      label: Típus
-      placeholder: -- Típus választása --
-      user: Általános felhasználó
-      teacher: Tanár
-      student: Tanuló
-      parent: Szülő
-    plainPassword:
-      first:
-        label: Jelszó
-      second:
-        label: Jelszó mégegyszer
-    save:
-      label: Mentés
+  username:
+    label: Fióknév
+  lastname:
+    label: Vezetéknév
+  firstname:
+    label: Keresztnév
+  email:
+    label: E-Mail
+  enabled:
+    label: Státusz
+  created:
+    label: Létrehozva
+  modified:
+    label: Módosítva
+  lastlogin:
+    label: Utolsó bejelentkezés
+  type:
+    label: Típus
+    placeholder: -- Típus választása --
+    user: Általános felhasználó
+    teacher: Tanár
+    student: Tanuló
+    parent: Szülő
+  plainPassword:
+    first:
+      label: Jelszó
+    second:
+      label: Jelszó mégegyszer
+  submit:
+    label: Mentés
 api:
   doc:
     link: API dokumentáció

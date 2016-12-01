@@ -2,6 +2,7 @@
 nbproject
 build/
 vendor/
+web/assets/vendor/
 web/bundles/
 web/css/
 web/js/

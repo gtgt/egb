@@ -2,7 +2,7 @@ root:
   path: /
   defaults:
     _controller: FrameworkBundle:Redirect:urlRedirect
-    path: /doc
+    path: /user/list
     permanent: true
 
 fos_user_profile:
@@ -13,9 +13,7 @@ fos_user_security:
 rest :
   type : rest
   resource : "routing_rest.yml"
-  prefix : /api
   defaults: {_format: html}
 
 api_doc:
   resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-  prefix:   /doc

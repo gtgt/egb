@@ -1,8 +1,9 @@
 offset: offset
 limit: limit
 user:
+  common:
+    cancel: Cancel
   list:
-    link: back to user list
     headline: Available users
     empty: No users found
   new:
@@ -15,30 +16,36 @@ user:
     submit: update user
   remove:
     link: remove
-form:
-  user:
-    username:
-      label: Fióknév
-    lastname:
-      label: Last name
-    firstname:
-      label: First name
-    email:
-      label: E-Mail
-    type:
-      label: Type
-      placeholder: -- Select type --
-      user: Simple user
-      teacher: Teacher
-      student: Student
-      parent: Parent
-    plainPassword:
-      first:
-        label: Password
-      second:
-        label: Password again
-    save:
-      label: Save
+  username:
+    label: Fióknév
+  lastname:
+    label: Last name
+  firstname:
+    label: First name
+  email:
+    label: E-Mail
+  enabled:
+    label: Enabled
+  created:
+    label: Created
+  modified:
+    label: Modified
+  lastlogin:
+    label: Last login time
+  type:
+    label: Type
+    placeholder: -- Select type --
+    user: Simple user
+    teacher: Teacher
+    student: Student
+    parent: Parent
+  plainPassword:
+    first:
+      label: Password
+    second:
+      label: Password again
+  submit:
+    label: Save
 api:
   doc:
     link: API documentation

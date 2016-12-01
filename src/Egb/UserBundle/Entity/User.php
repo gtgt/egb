@@ -14,9 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * User
  *
- * @ORM\Table(name="user")
- * @ORM\Entity
  * @ORM\Entity(repositoryClass="Egb\UserBundle\Repository\UserRepository")
+ * @ORM\Table(name="user")
  *
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
@@ -46,7 +45,7 @@ class User extends BaseUser {
 	/**
 	 * @ORM\Column(type="string", length=64, nullable=true)
 	 *
-	 * @Serializer\Groups({"Detail", "Me"})
+	 * @Serializer\Groups({"Default"})
 	 * @Serializer\Expose
 	 */
 	protected $firstname;
@@ -54,10 +53,26 @@ class User extends BaseUser {
 	/**
 	 * @ORM\Column(type="string", length=64, nullable=true)
 	 *
-	 * @Serializer\Groups({"Detail", "Me"})
+	 * @Serializer\Groups({"Default"})
 	 * @Serializer\Expose
 	 */
 	protected $lastname;
+
+	/**
+	 * @ORM\Column(type="datetime", nullable=false)
+	 *
+	 * @Serializer\Groups({"Default"})
+	 * @Serializer\Expose
+	 */
+	public $created;
+
+	/**
+	 * @ORM\Column(type="datetime", nullable=false)
+	 *
+	 * @Serializer\Groups({"Default"})
+	 * @Serializer\Expose
+	 */
+	public $modified;
 
 	/**
 	 * Get the formatted name to display (NAME Firstname or username)
@@ -69,15 +84,14 @@ class User extends BaseUser {
 	 * @Serializer\Groups({"Default", "Me"})
 	 */
 	public function getUsedName($separator = ' ') {
-		if ($this->getName() != null && $this->getFirstName() != null) {
-			return ucfirst(strtolower($this->getFirstName())).$separator.strtoupper($this->getName());
+		if ($this->lastname != null && $this->firstname != null) {
+			$ucfirst = function($string) {
+				return extension_loaded('mbstring') ? mb_strtoupper(mb_substr($string, 0, 1)).mb_substr($string, 1) : ucfirst($string);
+			};
+			return $ucfirst($this->firstname).$separator.$ucfirst($this->lastname);
 		} else {
-			return $this->getUsername();
+			return $this->username;
 		}
-	}
-
-	public function getType() {
-
 	}
 
 	public function __get($property) {
@@ -93,6 +107,12 @@ class User extends BaseUser {
 				if ($action == 'set') $this->{$property} = $args[0]; else return $this->{$property};
 			}
 		}
+		return $this->__get($method);
+	}
+
+	public function __construct() {
+		parent::__construct();
+		$this->created = new \DateTime("now");
 	}
 
 }

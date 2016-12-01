@@ -1,0 +1,30 @@
+# Editor config
+#
+# @author gt
+
+root = true
+
+[*]
+indent_style = tab
+indent_size = 2
+tab_width = 2
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# 4 space indentation for yml
+[*.yml]
+indent_style = space
+indent_size = 4
+
+# 2 space indentation for yml in src
+[src/**.yml]
+indent_style = space
+indent_size = 2
+
+# Non-standard
+;continuation_indent_size = 2
+;curly_bracket_next_line = false
+;spaces_around_operators = true
+;spaces_around_brackets = true

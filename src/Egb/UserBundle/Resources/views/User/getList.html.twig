@@ -8,22 +8,33 @@
 
 {% block content %}
 
-	<p>
-		{{ 'offset'|trans }}: {{ offset ?: '-' }}, {{ 'limit'|trans }}: {{ limit }}
-	</p>
-
-	<ul id="user-list">
+	<table class="table table-hover table-striped">
+		<caption class="text-right">
+			<a href="{{path('api_new_user')}}">{{'user.new.link'|trans}}</a>
+		</caption>
+		<thead>
+		<tr>
+			<th>{{'user.username.label'|trans}}</th>
+			<th colspan="2" style="width: 10%"></th>
+		</tr>
+		</thead>
+		<tbody>
 		{% for id, user in users %}
-			<li>
-				<a href="{{ path('api_get_user', {'id': user.id}) }}">{{ user }}</a>
-				[<a href="{{ path('api_edit_user', {'id': user.id}) }}">{{ 'user.edit.link'|trans }}</a>]
-				[<a href="{{ path('api_remove_user', {'id': user.id}) }}">{{ 'user.remove.link'|trans }}</a>]
-			</li>
+			<tr>
+				<td><a href="{{path('api_get_user', {'id': user.id})}}">{{user}}</a></td>
+				<td><a href="{{path('api_edit_user', {'id': user.id})}}">{{'user.edit.link'|trans}}</a></td>
+				<td><a href="{{path('api_remove_user', {'id': user.id})}}">{{'user.remove.link'|trans}}</a></td>
+			</tr>
 		{% else %}
-			<li>{{ 'user.list.empty'|trans }}</li>
+			<tr>
+				<td>{{'user.list.empty'|trans}}</td>
+			</tr>
 		{% endfor %}
-	</ul>
-	<p>
-		<a href="{{ path('api_new_user') }}">{{ 'user.new.link'|trans }}</a>
-	</p>
+		</tbody>
+		<tfoot>
+		<tr>
+			<td colspan="3">{{'offset'|trans}}: {{offset ?: 0}}, {{'limit'|trans}}: {{limit}}</td>
+		</tr>
+		</tfoot>
+	</table>
 {% endblock %}
