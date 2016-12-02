@@ -17,3 +17,4 @@ rest :
 
 api_doc:
   resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+  prefix: /doc
