@@ -2,6 +2,6 @@ nav:
     current: Current
     link:
         users: Users
-        api_doc: API Documentation
+        apidoc: API Documentation
 login:
     signin: Sign in

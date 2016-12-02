@@ -6,8 +6,8 @@ imports:
 # strict_requirements = true). So we can disable the requirements check completely for
 # enhanced performance with strict_requirements = null.
 framework:
-    router:
-        strict_requirements: null
+#    router:
+#        strict_requirements: null
     #validation:
     #    cache: apc
 

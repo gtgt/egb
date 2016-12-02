@@ -34,7 +34,7 @@ user:
     label: Utolsó bejelentkezés
   type:
     label: Típus
-    placeholder: -- Típus választása --
+    placeholder: -- Később nem változtatható! --
     user: Általános felhasználó
     teacher: Tanár
     student: Tanuló

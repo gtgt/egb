@@ -2,6 +2,7 @@
 
 namespace Egb\UserBundle\Form;
 
+use Egb\UserBundle\Entity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,38 +16,43 @@ class UserType extends AbstractType {
 	 * @param array $options
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options) {
+		/** @var Entity\User $user */
 		$user = $builder->getData();
-		$builder->add('username', Type\TextType::class)->add('firstname', Type\TextType::class)->add('lastname', Type\TextType::class)
+		$isModification = ($user && (null !== $user->id));
+		$builder
 			->add('userType', Type\ChoiceType::class, array(
-				'disabled' => ($user && (null !== $user->getId())),
+				'disabled' => $isModification,
 				'required' => true,
 				'placeholder' => 'user.type.placeholder',
 				'label' => 'user.type.label',
 				'choices' => array(
+					'user.type.user' => 'user',
 					'user.type.teacher' => 'teacher',
 					'user.type.student' => 'student',
 					'user.type.parent' => 'parent',
 				),
-				'empty_data' => array($user ? $user->getUserType() : 'user'),
+				'empty_data' => array($user ? $user->userType : 'user'),
 			))
-			->add('email', Type\EmailType::class)
+			->add('username', Type\TextType::class)->add('firstname', Type\TextType::class)->add('lastname', Type\TextType::class)
+			->add('email', Type\EmailType::class, array('required' => true))
+			->add('enabled')
 			->add('plainPassword', Type\RepeatedType::class, array(
 				'type' => Type\PasswordType::class,
 				'first_options' => array('label' => true),
 				'second_options' => array('label' => true),
-				'required' => false
+				'required' => !$isModification
 			))
-			->add('submit', Type\SubmitType::class, array('attr' => array('class' => 'btn-primary pull-right')))/*
-			->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-				$user = $event->getData();
+			->add('submit', Type\SubmitType::class, array('attr' => array('class' => 'btn-primary pull-right')))
+			/*->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
 				$form = $event->getForm();
+				$user = $form->getData();//(object)$event->getData();
 
 				// check if the User object is "new"
 				// If no data is passed to the form, the data is "null".
 				// This should be considered a new "User"
-				if ($user && (null !== $user->getId())) {
-						$fieldType = $form->get('type');
-						$fieldType->setData($user->getUserType());
+				if (!$user || (null === $user->getId())) {
+						$type = $form->get('userType')->getData();
+
 				}
 		})*/;
 	}
@@ -56,7 +62,6 @@ class UserType extends AbstractType {
 	 */
 	public function configureOptions(OptionsResolver $resolver) {
 		$resolver->setDefaults(array(
-			'data_class' => 'Egb\UserBundle\Entity\User',
 			'intention' => 'user',
 			'translation_domain' => 'UserBundle'
 		));

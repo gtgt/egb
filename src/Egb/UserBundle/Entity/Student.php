@@ -21,9 +21,7 @@ class Student extends User {
 	 * Provide discrimiator value.
 	 * We cannot use Doctrine annotations, since it will see as a duplicate declaration.
 	 */
-	public function getUserType() {
-		return 'student';
-	}
+	protected $userType = 'student';
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Paren", inversedBy="students")

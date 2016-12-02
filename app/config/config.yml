@@ -27,11 +27,17 @@ services:
         class: Leafo\ScssPhp\Compiler
     app.sass_formatter:
         class: Leafo\ScssPhp\Formatter\Expanded
-    app.twig.sass_renderer:
+    egb.twig.sass_renderer:
         class: Egb\Util\Twig\SassRenderFunction
         arguments: ['@app.sass_compiler','@cache.app']
         tags:
             - { name: twig.extension}
+    egb.phpdoc_type_guesser:
+        class: Egb\Util\Form\PHPDocTypeGuesser
+        tags:
+            - { name: form.type_guesser }
+        arguments: ['@doctrine']
+
 # Twig Configuration
 twig:
     debug:            '%kernel.debug%'

@@ -29,9 +29,7 @@ class User extends BaseUser {
 	 * Provide discrimiator value.
 	 * We cannot use Doctrine annotations, since it will see as a duplicate declaration.
 	 */
-	public function getUserType() {
-		return 'user';
-	}
+	protected $userType = 'user';
 
 	/**
 	 * @ORM\Id
@@ -96,6 +94,12 @@ class User extends BaseUser {
 
 	public function __get($property) {
 		if (property_exists(__CLASS__, $property)) return $this->{$property};
+		$method = 'get'.ucfirst($property);
+		if (method_exists($this, $method)) return $this->{$method}();
+	}
+
+	public function __set($property, $value) {
+		if (property_exists(__CLASS__, $property)) $this->{$property} = $value;
 	}
 
 	public function __call($method, $args = array()) {

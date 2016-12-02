@@ -21,9 +21,7 @@ class Paren extends User {
 	 * Provide discrimiator value.
 	 * We cannot use Doctrine annotations, since it will see as a duplicate declaration.
 	 */
-	public function getUserType() {
-		return 'parent';
-	}
+	protected $userType = 'parent';
 
 	/**
 	 * @var \Doctrine\Common\Collections\Collection

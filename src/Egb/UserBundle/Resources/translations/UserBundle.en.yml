@@ -34,7 +34,7 @@ user:
     label: Last login time
   type:
     label: Type
-    placeholder: -- Select type --
+    placeholder: -- Can not be changed later! --
     user: Simple user
     teacher: Teacher
     student: Student

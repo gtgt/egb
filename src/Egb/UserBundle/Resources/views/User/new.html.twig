@@ -1,8 +1,7 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% trans_default_domain "UserBundle" %}
-
-{% block title "EGB - Users" %}
+{% block title "user.new.headline"|trans %}
 {% block pagetitle "user.new.headline"|trans %}
 
 {% block content_header "" %}
@@ -10,11 +9,12 @@
 {% block content %}
 
 	{% if (form is defined) %}
-		{{ form_start(form, {'method': 'PUT'}) }}
+		{{ form_start(form, {'method': 'POST'}) }}
 		{{ form_widget(form) }}
+		<div class="form-group clearfix">
+			<a href="{{path('api_get_user_list')}}" id="user_cancel" class="btn-default pull-left btn">{{'user.common.cancel'|trans}}</a>
+		</div>
 		{{ form_end(form) }}
 	{% endif %}
-
-	<a href="{{ path('api_get_users') }}">{{ 'user.list.link'|trans }}</a>
 
 {% endblock %}

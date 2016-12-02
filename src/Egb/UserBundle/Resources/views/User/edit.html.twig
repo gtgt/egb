@@ -1,7 +1,7 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
 
-{% block title 'EGB - Users' %}
 {% trans_default_domain 'UserBundle' %}
+{% block title 'user.edit.headline'|trans({'%username%': form.username.vars.value}) %}
 {% block pagetitle 'user.edit.headline'|trans({'%username%': form.username.vars.value}) %}
 
 {% block fos_user_content %}

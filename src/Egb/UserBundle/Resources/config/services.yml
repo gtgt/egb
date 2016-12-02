@@ -1,1 +1,7 @@
 services:
+    egb.user.user_type_listener:
+        class: Egb\UserBundle\EventListener\UserTypeListener
+        arguments:
+            container: '@service_container'
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, priority: 1 }

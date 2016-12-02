@@ -2,6 +2,6 @@ nav:
     current: Jelenlegi
     link:
         users: Felhasználók
-        api_doc: API Dokumentáció
+        apidoc: API Dokumentáció
 login:
     signin: Bejelentkezés
