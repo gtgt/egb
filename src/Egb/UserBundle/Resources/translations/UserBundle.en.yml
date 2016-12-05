@@ -1,21 +1,14 @@
 offset: offset
 limit: limit
+weekday:
+  0: Monday
+  1: Tuesday
+  2: Wendesday
+  3: Thursday
+  4: Friday
+  5: Saturday
+  6: Sunday
 user:
-  common:
-    cancel: Cancel
-  list:
-    headline: Available users
-    empty: No users found
-  new:
-    link: create new user
-    headline: Create new user
-    submit: add user
-  edit:
-    link: edit
-    headline: Edit user %username%
-    submit: update user
-  remove:
-    link: remove
   username:
     label: Fióknév
   lastname:
@@ -44,8 +37,35 @@ user:
       label: Password
     second:
       label: Password again
+teacher:
+  consultingHours:
+    label: Consulting hours
+    when:
+      label: When (time)
+    weekday:
+      label: Weekday
+    length:
+      label: Length (in minutes)
+action:
+  list:
+    headline: Available users
+    empty: No users found
+  new:
+    label: create new user
+    headline: Create new user
+  edit:
+    label: edit
+    headline: Edit user %username%
   submit:
     label: Save
+  remove:
+    label: Remove
+  cancel:
+    label: Cancel
+  add:
+    label: Add
+  close:
+    label: Close
 api:
   doc:
     link: API documentation

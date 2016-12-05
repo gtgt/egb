@@ -24,14 +24,22 @@ class Clas {
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
-	private $id;
+	public $id;
 
 	/**
 	 * @ORM\Column(type="string", length=3)
+	 * @Assert\Expression(expression="[1-8]/[A-F]", message="class.validation.wrongname")
 	 *
 	 * @Serializer\Expose
 	 */
-	private $name;
+	public $name;
+
+	/**
+	 * @ORM\Column(type="integer", length=4)
+	 * @Assert\GreaterThanOrEqual(value="2016")
+	 * @Serializer\Expose
+	 */
+	public $year;
 
 	/**
 	 * @var \Doctrine\Common\Collections\Collection
@@ -41,7 +49,7 @@ class Clas {
 	 * @Serializer\Expose
 	 * @Serializer\MaxDepth(3)
 	 */
-	private $teacher;
+	public $teacher;
 
 	/**
 	 * @var \Doctrine\Common\Collections\Collection
@@ -52,7 +60,7 @@ class Clas {
 	 * @Serializer\Expose
 	 * @Serializer\MaxDepth(2)
 	 */
-	private $students;
+	public $students;
 
 }
 

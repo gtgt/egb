@@ -2,6 +2,7 @@
 
 namespace Egb\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 use JMS\Serializer\Annotation as Serializer;
@@ -33,6 +34,6 @@ class Paren extends User {
 	 * @Serializer\Expose
 	 * @Serializer\MaxDepth(1)
 	 */
-	private $students;
+	protected $students;
 }
 

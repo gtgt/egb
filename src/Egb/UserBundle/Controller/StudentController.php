@@ -3,6 +3,7 @@
 namespace Egb\UserBundle\Controller;
 
 use Egb\UserBundle\Entity;
+use Egb\UserBundle\Form;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -27,4 +28,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 class StudentController extends UserController {
 
 	protected $entityClass = 'UserBundle:Student';
+	//protected $formTypeClass = Form\StudentType::class;
+	protected $userType = 'student';
 }

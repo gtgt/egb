@@ -1,21 +1,14 @@
 offset: eltolás
 limit: limit
+weekday:
+  0: Hétfő
+  1: Kedd
+  2: Szerda
+  3: Csütörtök
+  4: Péntek
+  5: Szombat
+  6: Vasárnap
 user:
-  common:
-    cancel: Mégse
-  list:
-    headline: Felhasználók
-    empty: Nincs felhasználó
-  new:
-    link: új felhasználó
-    headline: Új felhasználó létrehozása
-    submit: hozzáadás
-  edit:
-    link: szerkesztés
-    headline: %username% felhasználó szerkesztése
-    submit: módosítás
-  remove:
-    link: törlés
   username:
     label: Fióknév
   lastname:
@@ -44,8 +37,36 @@ user:
       label: Jelszó
     second:
       label: Jelszó mégegyszer
+teacher:
+  consultingHours:
+    label:
+      Fogadóórák
+    when:
+      label: Időpont (óra:perc)
+    weekday:
+      label: Nap
+    length:
+      label: Időtartam (percben)
+action:
+  list:
+    headline: Felhasználók
+    empty: Nincs felhasználó
+  new:
+    label: új felhasználó
+    headline: Új felhasználó létrehozása
+  edit:
+    label: szerkesztés
+    headline: %username% felhasználó szerkesztése
+  remove:
+    label: törlés
   submit:
     label: Mentés
+  cancel:
+    label: Mégse
+  add:
+    label: Hozzáadás
+  close:
+    label: Bezárás
 api:
   doc:
     link: API dokumentáció

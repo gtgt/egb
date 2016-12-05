@@ -14,9 +14,9 @@
 				</div>
 				<div class="user-operations">
 					<div class="btn-group" role="group" aria-label="Operations">
-						<a href="{{path('api_remove_user', {id: user.id})}}" class="btn btn-link"><i class="glyphicon glyphicon-remove"></i>&nbsp;{{'user.remove.link'|trans}}</a>
+						<a href="{{path('api_remove_user', {id: user.id})}}" class="btn btn-link"><i class="glyphicon glyphicon-remove"></i>&nbsp;{{'action.remove.label'|trans}}</a>
 						<a href="" class="hidden btn btn-link"><i class="glyphicon glyphicon-envelope"></i>&nbsp;Send Message</a>
-						<a href="{{path('api_edit_user', {id: user.id})}}" class="btn btn-link"><i class="glyphicon glyphicon-edit"></i>&nbsp;{{'user.edit.link'|trans}}</a>
+						<a href="{{path('api_edit_user', {id: user.id})}}" class="btn btn-link"><i class="glyphicon glyphicon-edit"></i>&nbsp;{{'action.edit.label'|trans}}</a>
 					</div>
 				</div>
 			</div>
@@ -53,6 +53,7 @@
 					<label class="control-label">{{'user.modified.label'|trans}}</label>
 					<div>{% if user.modified %}{{user.modified|date}}{% else %}-{% endif %}</div>
 				</div>
+				{% block additional_user_content '' %}
 			</div>
 		</div>
 	</div>

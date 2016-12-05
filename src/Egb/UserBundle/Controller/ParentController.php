@@ -3,6 +3,7 @@
 namespace Egb\UserBundle\Controller;
 
 use Egb\UserBundle\Entity;
+use Egb\UserBundle\Form;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -27,5 +28,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 class ParentController extends UserController {
 
 	protected $entityClass = 'UserBundle:Paren';
+	//protected $formTypeClass = Form\ParentType::class;
+	protected $userType = 'parent';
 
 }

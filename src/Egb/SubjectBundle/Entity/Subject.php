@@ -24,31 +24,31 @@ class Subject {
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
-	private $id;
+	public $id;
 
 	/**
 	 * @ORM\Column(type="string", length=128)
 	 *
 	 * @Serializer\Expose
 	 */
-	private $name;
+	public $name;
 
 	/**
 	 * @var \Egb\UserBundle\Entity\Teacher
 	 *
 	 * @ORM\ManyToOne(targetEntity="Egb\UserBundle\Entity\Teacher", inversedBy="subjects")
-	 * @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+	 * @ORM\JoinColumn(name="uid", referencedColumnName="uid", unique=true)
 	 *
 	 * @Serializer\Type("Egb\UserBundle\Entity\Teacher")
 	 * @Serializer\Expose
 	 * @Serializer\MaxDepth(1)
 	 */
-	private $teacher;
+	public $teacher;
 
 	/**
 	 * @var \Doctrine\Common\Collections\Collection
 	 *
-	 * @ORM\ManyToMany(targetEntity="Egb\UserBundle\Entity\Student")
+	 * @ORM\ManyToMany(targetEntity="Egb\UserBundle\Entity\Student", inversedBy="subjects")
 	 * @ORM\JoinTable(name="subject_students",
 	 *   joinColumns={
 	 *     @ORM\JoinColumn(name="suid", referencedColumnName="suid")
@@ -62,7 +62,7 @@ class Subject {
 	 * @Serializer\Expose
 	 * @Serializer\MaxDepth(2)
 	 */
-	private $students;
+	public $students;
 
 }
 

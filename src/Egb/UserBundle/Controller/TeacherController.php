@@ -3,6 +3,7 @@
 namespace Egb\UserBundle\Controller;
 
 use Egb\UserBundle\Entity;
+use Egb\UserBundle\Form;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -27,6 +28,8 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 class TeacherController extends UserController {
 
 	protected $entityClass = 'UserBundle:Teacher';
+	protected $formTypeClass = Form\TeacherType::class;
+	protected $userType = 'teacher';
 
 	/**
 	 * Get consulting hours

@@ -1,14 +1,40 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
 
 {% trans_default_domain 'UserBundle' %}
-{% block title 'user.edit.headline'|trans({'%username%': form.username.vars.value}) %}
-{% block pagetitle 'user.edit.headline'|trans({'%username%': form.username.vars.value}) %}
+{% block title 'action.edit.headline'|trans({'%username%': form.username.vars.value}) %}
+{% block pagetitle 'action.edit.headline'|trans({'%username%': form.username.vars.value}) %}
 
 {% block fos_user_content %}
-	{{ form_start(form, {'method': 'PATCH'}) }}
-	{{ form_widget(form) }}
-		<div class="form-group clearfix">
-			<a href="{{path('api_get_user', {id: user.id})}}" id="user_cancel" class="btn-default pull-left btn">{{'user.common.cancel'|trans}}</a>
-		</div>
-	{{ form_end(form) }}
+	{{form_start(form, {'method': 'PATCH'})}}
+	{{form_widget(form)}}
+	{% block additional_user_form_content '' %}
+	<div class="form-group clearfix">
+		<a href="{{path('api_get_user', {id: user.id})}}" id="user_cancel" class="btn-default pull-left btn">{{'action.cancel.label'|trans}}</a>
+	</div>
+	{{form_end(form)}}
 {% endblock %}
+
+	{% block javascripts %}
+		<script type="text/javascript">
+			(function($) {
+				$(function() {
+					$('[data-prototype]').each(function() {
+						var $this = $(this).addClass('clearfix').append('<div class="actions pull-right"></div>');
+						var count = $this.children().length;
+						var $list = $('<ul class="collection"></ul>').appendTo($this);
+						$('<button class="btn-success"><i class="glyphicon glyphicon-plus"></i></button>').click(function(e) {
+							e.preventDefault();
+							// grab the prototype template
+							var newWidget = $this.attr('data-prototype');
+							// replace the "__name__" used in the id and name of the prototype
+							// with a number that's unique to your emails
+							// end name attribute looks like name="contact[emails][2]"
+							newWidget = newWidget.replace(/__name__/g, count);
+							count++;
+							$list.append($(newWidget).wrapAll('<li><div class="collection-item"></div></li>'));
+						}).appendTo($this.children('.actions'));
+					});
+				});
+			})(jQuery);
+		</script>
+	{% endblock %}

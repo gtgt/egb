@@ -2,6 +2,7 @@
 
 namespace Egb\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 use JMS\Serializer\Annotation as Serializer;
@@ -32,7 +33,7 @@ class Student extends User {
 	 * @Serializer\Expose
 	 * @Serializer\MaxDepth(1)
 	 */
-	private $parent;
+	protected $parent;
 
 	/**
 	 * @var \Egb\ClassBundle\Entity\Clas
@@ -45,7 +46,7 @@ class Student extends User {
 	 * @Serializer\Expose
 	 * @Serializer\MaxDepth(2)
 	 */
-	private $class;
+	protected $class;
 
 	/**
 	 * @var \Doctrine\Common\Collections\Collection
@@ -57,7 +58,7 @@ class Student extends User {
 	 * @Serializer\Expose
 	 * @Serializer\MaxDepth(1)
 	 */
-	private $subjects;
+	protected $subjects;
 
 }
 

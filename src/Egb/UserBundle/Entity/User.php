@@ -5,6 +5,7 @@ namespace Egb\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 use JMS\Serializer\Annotation as Serializer;
@@ -115,8 +116,8 @@ class User extends BaseUser {
 	}
 
 	public function __construct() {
-		parent::__construct();
 		$this->created = new \DateTime("now");
+		parent::__construct();
 	}
 
 }

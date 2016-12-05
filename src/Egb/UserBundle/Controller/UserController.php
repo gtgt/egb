@@ -30,6 +30,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 class UserController extends FOSRestController {
 
 	protected $entityClass = 'UserBundle:User';
+	protected $formTypeClass = Form\UserType::class;
 	protected $userType = 'user';
 	/**
 	 * @var \Egb\UserBundle\Repository\UserRepository
@@ -78,7 +79,7 @@ class UserController extends FOSRestController {
 			$entityClass = $this->getRepository()->getClassName();
 			if (class_exists($entityClass)) $user = new $entityClass();
 		}
-		return $this->createForm(Form\UserType::class, $user, $options);
+		return $this->createForm($this->formTypeClass, $user, $options);
 	}
 
 	/**
@@ -143,7 +144,6 @@ class UserController extends FOSRestController {
 	 * )
 	 *
 	 * @Rest\View(
-	 *   template = "UserBundle:User:edit.html.twig",
 	 *   templateVar="user"
 	 * )
 	 *
@@ -223,7 +223,6 @@ class UserController extends FOSRestController {
 	 * )
 	 *
 	 * @Rest\View(
-	 *   template = "UserBundle:User:get.html.twig",
 	 *   templateVar="user",
 	 *   serializerEnableMaxDepthChecks=true,
 	 *   serializerGroups={"Default","Details"}

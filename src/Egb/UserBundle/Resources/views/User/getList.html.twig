@@ -1,8 +1,8 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% trans_default_domain 'UserBundle' %}
-{% block title "user.list.headline"|trans %}
-{% block pagetitle "user.list.headline"|trans %}
+{% block title "action.list.headline"|trans %}
+{% block pagetitle "action.list.headline"|trans %}
 
 {% block content_header '' %}
 
@@ -22,12 +22,12 @@
 		{% for id, user in users %}
 			<tr>
 				<td><a href="{{path('api_get_user', {'id': user.id})}}">{{user}}</a></td>
-				<td><a href="{{path('api_edit_user', {'id': user.id})}}">{{'user.edit.link'|trans}}</a></td>
-				<td><a href="{{path('api_remove_user', {'id': user.id})}}">{{'user.remove.link'|trans}}</a></td>
+				<td><a href="{{path('api_edit_user', {'id': user.id})}}">{{'action.edit.label'|trans}}</a></td>
+				<td><a href="{{path('api_remove_user', {'id': user.id})}}">{{'action.remove.label'|trans}}</a></td>
 			</tr>
 		{% else %}
 			<tr>
-				<td>{{'user.list.empty'|trans}}</td>
+				<td>{{'action.list.empty'|trans}}</td>
 			</tr>
 		{% endfor %}
 		</tbody>

@@ -42,19 +42,9 @@ class UserType extends AbstractType {
 				'second_options' => array('label' => true),
 				'required' => !$isModification
 			))
-			->add('submit', Type\SubmitType::class, array('attr' => array('class' => 'btn-primary pull-right')))
-			/*->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
-				$form = $event->getForm();
-				$user = $form->getData();//(object)$event->getData();
-
-				// check if the User object is "new"
-				// If no data is passed to the form, the data is "null".
-				// This should be considered a new "User"
-				if (!$user || (null === $user->getId())) {
-						$type = $form->get('userType')->getData();
-
-				}
-		})*/;
+			->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event) {
+				$event->getForm()->add('submit', Type\SubmitType::class, array('label' => 'action.submit.label', 'attr' => array('class' => 'btn-primary pull-right')));
+			});
 	}
 
 	/**
