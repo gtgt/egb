@@ -97,7 +97,7 @@ class TeacherConsultingHour {
 	 * Weekday as described in date() function
 	 *
 	 * @ORM\Id
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", options={"unsigned" = true})
 	 * @Assert\Range(min="0", max="6")
 	 * @Serializer\Expose
 	 */
@@ -105,7 +105,7 @@ class TeacherConsultingHour {
 
 	/**
 	 * @ORM\Id
-	 * @ORM\Column(type="string", nullable=false)
+	 * @ORM\Column(type="string", length=5, nullable=false)
 	 * @Assert\Expression(expression="[0-2][0-9]:[0-2][0-9]")
 	 * @Serializer\Expose
 	 */
@@ -113,7 +113,7 @@ class TeacherConsultingHour {
 
 	/**
 	 * Length in minutes
-	 * @ORM\Column(type="smallint")
+	 * @ORM\Column(type="smallint", options={"unsigned" = true, "default" = 60})
 	 * @Serializer\Type("integer")
 	 * @Assert\Range(min="60", max="240")
 	 * @Serializer\Expose

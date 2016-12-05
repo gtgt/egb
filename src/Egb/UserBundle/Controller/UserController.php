@@ -237,10 +237,6 @@ class UserController extends FOSRestController {
 		$user = $this->getRepository()->find($id);
 		if (!is_object($user)) {
 			throw $this->createNotFoundException();
-		} elseif ($user->userType <> $this->userType) {
-			//we are not in proper controller...
-			$classMap = $this->getClassMap();
-			//if (isset($classMap[$user->userType])) return $this->forward($classMap[$user->userType].'::'.__FUNCTION__);
 		}
 		return $user;
 	}
